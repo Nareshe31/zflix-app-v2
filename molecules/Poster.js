@@ -3,24 +3,25 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { getLink, getYear } from "../utils/functions";
 
-export default function Poster({ item, type }) {
+export default function Poster({ item, media_type }) {
     const router = useRouter();
     let { language } = router.query;
 
-    const title = type === "movie" ? item.title : item.name;
+    const title = media_type === "movie" ? item.title : item.name;
     const year =
-        type === "movie"
+        media_type === "movie"
             ? getYear(item.release_date)
             : getYear(item.first_air_date);
-    const link = getLink(item, type,language);
+    const link = getLink(item, media_type,language);
+    const imageURL=`https://image.tmdb.org/t/p/w342${item.poster_path?item.poster_path:"/wZwxopzmqOBmS44Y2q4LUsOiFTC.jpg"}`
     return (
         <article key={item.id} id={`post-${item.id}`} className="item movies">
             <div className="poster">
                 <div className="poster-image">
                     <Image
                         placeholder="blur"
-                        blurDataURL={"https://image.tmdb.org/t/p/w342" + item.poster_path}
-                        src={"https://image.tmdb.org/t/p/w342" + item.poster_path}
+                        blurDataURL={imageURL}
+                        src={imageURL}
                         alt={title}
                         layout="responsive"
                         width={160}

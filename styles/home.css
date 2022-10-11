@@ -6,6 +6,9 @@
 .posters_section {
   padding: 10px 30px 40px;
 }
+.posters_section.horizontal{
+  padding: 10px 30px 5px;
+}
 .posters_section header {
   padding-left: var(--poster-section-padding);
   padding-top: 0.4rem;
@@ -18,6 +21,12 @@
   font-size: var(--header-font-size);
 }
 .posters_section header{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+.posters_section header .left{
   display: flex;
   align-items: center;
   gap: 10px;
@@ -35,11 +44,18 @@
 .posters_section header .type button.active{
   background-color: #393939;
 }
+.posters_section header>button{
+  margin-right: 14px;
+}
 .items {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   /* gap: var(--poster-section-padding); */
+}
+
+.items.hide{
+  display: none;
 }
 
 /* .module .content .items  */
@@ -177,14 +193,14 @@
   filter: blur(2px) brightness(0.3);
 }
 
-.items .item .data {
+.item .data {
   width: 100%;
   margin-bottom: 10px;
   margin-top: 5px;
   position: relative;
 }
 
-.items .item .data h3 {
+.item .data h3 {
   font-weight: 600;
   font-size: 0.825rem;
   width: 100%;
@@ -193,10 +209,10 @@
   overflow: hidden;
   color: var(--primary-text-color);
 }
-.items .item .data h3:hover{
+.item .data h3:hover{
   color: var(--primary-text-hover-color);
 }
-.items .item .data span {
+.item .data span {
   width: 100%;
   font-size: 0.7rem;
   text-overflow: ellipsis;
@@ -234,10 +250,35 @@
     width: calc(100% / 3);
   }
   .posters_section{
-    padding: 10px 6px 20px;
-    
+    padding: 10px 6px 20px !important;
+  }
+  .posters_section.horizontal{
+    padding: 10px 6px 0px !important;
   }
   :root{
     --poster-section-padding:8px;
   }
+}
+
+
+
+/* Loader */
+.posters_section .load-container{
+  width: 100%;
+  height: 400px;
+  display: grid;
+  place-items: center;
+}
+.posters_section .load-container .loader {
+  border: 4px solid #bfb7b7; /* Light grey */
+  border-top: 4px solid hsla(0, 2%, 34%, 0.815); /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

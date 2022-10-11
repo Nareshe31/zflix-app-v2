@@ -1,44 +1,88 @@
+import { useRouter } from "next/router";
 import PosterContainer from "../../../molecules/PosterContainer";
 import { get } from "../../../service/api-fetch";
+import { getCookie, setCookie } from 'cookies-next';
 
-export default function MoviePage(props) {
-    const {movie_data_popular,movie_data_top_rated,movie_data_upcoming}=props
-    return(
+export default function MoviePage({movie_data_upcoming}) {
+    const router=useRouter()
+    const {language}=router.query
+    const region=getCookie('region')?JSON.parse(getCookie('region')):{"name": "",
+    "alpha-2": "",
+    "country-code": ""}
+    return (
         <div>
-            <PosterContainer title={"Upcoming movies"} type="movie" data_day={movie_data_upcoming} />
-            <PosterContainer title={"Popular movies"} type="movie" data_day={movie_data_popular} />
-            <PosterContainer title={"Top rated movies"} type="movie" data_day={movie_data_top_rated} />
+             
+            <PosterContainer
+                title={"Upcoming movies"}
+                media_type="movie"
+                all_data={{upcoming:movie_data_upcoming}}
+                data_types={[{name:"Upcoming",value:"upcoming"}]}
+                loadData={{upcoming:false}}
+            />
+            <PosterContainer
+                title={`Popular movies in ${region.name}`}
+                loadData={{popular:true}}
+                meta_data={{popular:{
+                    url: `/movie/popular`,
+                    type: "tmdb",
+                    params: [
+                        { key: "language", value: language },
+                        { key: "page", value: 1 },
+                        {key:"region",value:region["alpha-2"]}
+                    ],
+                }}}
+                media_type="movie"
+                data_types={[{name:"Popular",value:"popular"}]}
+            />
+            <PosterContainer
+                title={"Top rated movies"}
+                loadData={{top_rated:true}}
+                meta_data={{top_rated:{
+                    url: `/movie/top_rated`,
+                    type: "tmdb",
+                    params: [
+                        { key: "language", value: language },
+                        { key: "page", value: 1 },
+                        {key:"region",value:region["alpha-2"]}
+                    ],
+                }}}
+                media_type="movie"
+                data_types={[{name:"Top rated",value:"top_rated"}]}
+            />
         </div>
-    )
+    );
 }
 
-export async function getServerSideProps({query,req}) {
+export async function getServerSideProps({ query, req,res }) {
     try {
-        const forwarded = req.headers["x-forwarded-for"]
-        const ip = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress
-        const response=await fetch(`https://ipapi.co/${ip}/json`)
-        const data=await response.json()
-        console.log({ip,data});
+        const forwarded = req.headers["x-forwarded-for"];
+        const ip = forwarded
+            ? forwarded.split(/, /)[0]
+            : req.connection.remoteAddress;
+       
         const { language } = query;
-        const movie_data_popular = await get({
-            url: `/movie/popular`,
-            type: "tmdb",
-            params: [{ key: "language", value: language },{key:'page',value:1}],
-        });
-        const movie_data_top_rated = await get({
-            url: `/movie/top_rated`,
-            type: "tmdb",
-            params: [{ key: "language", value: language },{key:'page',value:1}],
-        });
+        const isregion=getCookie('region',{req,res})
+        var region={}
+        if (isregion) {
+            region=JSON.parse(getCookie('region',{req,res}))
+        }
+        else{
+            const response=await fetch(`http://ip-api.com/json/${ip}`)
+            const data=await response.json()
+            region={"name": data.country,
+            "alpha-2": data.countryCode,
+            "country-code": ""}
+            setCookie('region',region,{req,res})
+            console.log(data);
+        }
+        console.log(region);
         const movie_data_upcoming = await get({
             url: `/movie/upcoming`,
             type: "tmdb",
-            params: [{ key: "language", value: language },{key:'page',value:1},{key:"region",value:"IN"}],
+            params: [{ key: "language", value: language },{key:'page',value:1},{key:"region",value:region["alpha-2"]}],
         });
         return {
             props: {
-                movie_data_popular,
-                movie_data_top_rated,
                 movie_data_upcoming
             },
         };

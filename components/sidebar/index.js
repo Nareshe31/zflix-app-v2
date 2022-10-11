@@ -5,34 +5,36 @@ import { useEffect, useRef } from "react";
 export default function Sidebar({ }) {
     const router = useRouter();
     const language = router.query.language || 'en';
+    const sidebar = useRef(null)
     const expandSidebar = () => {
-        const sidebar = document.querySelector("#sidebar");
         const asideRight = document.body;
         // ("#aside-right");
-        if (sidebar.classList.contains("expand")) {
+        if (sidebar.current.classList.contains("expand")) {
             const scrollY = asideRight.style.top;
             asideRight.style.position = "";
             asideRight.style.top = "";
             window.scrollTo(0, parseInt(scrollY || "0") * -1);
-            sidebar.classList.remove("expand");
+            sidebar.current.classList.remove("expand");
         } else {
             const top = window.scrollY;
             asideRight.style.position = "fixed";
             asideRight.style.top = `-${top}px`;
-            sidebar.classList.add("expand");
+            sidebar.current.classList.add("expand");
         }
     };
 
     useEffect(() => {
-        const sidebar = document.querySelector("#sidebar");
-        sidebar.classList.value = "sidebar";
+        closeSidebar()
+        return () => { };
+    }, [router.asPath]);
+
+    const closeSidebar=()=>{
+        sidebar.current.classList.value = "sidebar";
         const asideRight = document.body;
         asideRight.style.position = "";
         asideRight.style.top = "";
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
-        return () => { };
-    }, [router.asPath]);
-
+    }
     const menu_links = [
         {
             id: 1,
@@ -82,8 +84,8 @@ export default function Sidebar({ }) {
         const first_part=item.addBaseURL?`/${language}`:''
         const link=first_part+item.url
         return (
-            <Link href={`${first_part}${item.url}`}>
-                <a>
+            <Link href={`${first_part}${item.url}`} passHref shallow>
+                <a >
                     <li className={`menu-link ${router.asPath===link?'menu-active':''}`}>
                         <span className="icon" data-desc={item.name}>
                             <i className={item.icon}></i>
@@ -109,11 +111,16 @@ export default function Sidebar({ }) {
     };
     return (
         <>
-            <aside className="sidebar" id="sidebar">
+            <aside className="sidebar" ref={sidebar} id="sidebar">
                 {/* <header>ZFlix</header> */}
                 <div className="sidebar-handle">
-                    <button className=" expand" onClick={expandSidebar}>
-                        <i id="sidebar-arrow" className="fa-solid fa-arrow-right"></i>
+                    <button className="expand" onClick={expandSidebar}>
+                        {/* <i id="sidebar-arrow" className="fa-solid fa-arrow-right"></i> */}
+                        <div className="ham">
+                            <div className="line-1"></div>
+                            <div className="line-2"></div>
+                            <div className="line-3"></div>
+                        </div>
                     </button>
                     <button className="close" onClick={expandSidebar}>
                         <i id="sidebar-arrow" className="fa-solid fa-arrow-left"></i>
