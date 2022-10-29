@@ -20,9 +20,9 @@ export default function Header({title,data_type,data,data_types,change_view,cont
             }}>
                 {
                     containerview==="horizontal"?
-                    <i class="fa-solid fa-grip-vertical"></i>
+                    <i className="fa-solid fa-grip-vertical"></i>
                     :
-                    <i class="fa-solid fa-grip"></i>
+                    <i className="fa-solid fa-grip"></i>
                 }
             </button>
         </header>

@@ -1,16 +1,13 @@
 import '../styles/globals.css'
-import '../styles/home.css'
-import '../styles/sidebar.css'
+import '../styles/home.scss'
+import '../styles/movie.scss'
+import '../styles/sidebar.scss'
 import Sidebar from '../components/sidebar'
-import { useRouter } from 'next/router'
-import { setCookie } from 'cookies-next';
 
 //import owl carousel
 import 'owl.carousel/dist/assets/owl.carousel.css';
-import dynamic from 'next/dynamic'
-const Owl = dynamic(() => import("owl.carousel"), {
-    ssr:false
-  });
+import Link from 'next/link'
+import Header from '../molecules/Header'
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -23,9 +20,7 @@ function Layout({children}) {
     <>
       <Sidebar  />
       <main className='aside-right' id='aside-right'>
-        <div className='header'>
-        
-        </div>
+        <Header />
         {children}
       </main>
     </>

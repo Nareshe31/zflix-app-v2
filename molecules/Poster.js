@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getLink, getYear } from "../utils/functions";
+import { getLink, getYear, TMDB_BASE_IMAGE_PATH } from "../utils/functions";
 
 export default function Poster({ item, media_type }) {
     const router = useRouter();
@@ -13,7 +13,7 @@ export default function Poster({ item, media_type }) {
             ? getYear(item.release_date)
             : getYear(item.first_air_date);
     const link = getLink(item, media_type,language);
-    const imageURL=`https://image.tmdb.org/t/p/w342${item.poster_path?item.poster_path:"/wZwxopzmqOBmS44Y2q4LUsOiFTC.jpg"}`
+    const imageURL=`${TMDB_BASE_IMAGE_PATH('w342')}${item.poster_path?item.poster_path:"/wZwxopzmqOBmS44Y2q4LUsOiFTC.jpg"}`
     return (
         <article key={item.id} id={`post-${item.id}`} className="item movies">
             <div className="poster">
@@ -24,8 +24,8 @@ export default function Poster({ item, media_type }) {
                         src={imageURL}
                         alt={title}
                         layout="responsive"
-                        width={160}
-                        height={220}
+                        width={140}
+                        height={200}
                     />
                 </div>
                 {/* <img loading="lazy" data-perfmatters-preload="" src={"https://image.tmdb.org/t/p/w342"+item.poster_path} alt={title}/> */}
@@ -37,17 +37,17 @@ export default function Poster({ item, media_type }) {
                     <i className="fa-regular fa-bookmark"></i>
                 </div>
                 {/* <div className="featu">Featured</div> */}
-                <Link href={link}>
-                    <a  title={title}>
+                {/* <Link href={link}> */}
+                    <a href={link} title={title}>
                         <div className="see play4"></div>
                     </a>
-                </Link>
+                {/* </Link> */}
             </div>
             <div className="data dfeatur">
                 <h3 title={title}>
-                    <Link href={link}>
-                        <a>{title}</a>
-                    </Link>
+                    {/* <Link href={link}> */}
+                        <a href={link}>{title}</a>
+                    {/* </Link> */}
                 </h3>
                 <span>{year}</span>
             </div>

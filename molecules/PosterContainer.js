@@ -77,9 +77,13 @@ export default function PosterContainer({
                                 1000: {
                                     items: 7,
                                 },
+                                1120:{
+                                    items:8
+                                }
                             }}
-                            nav={false}
                             autoplay={false}
+                            dots={false}
+                            slideBy="page"
                         >
                             {data?.results?.map((item) => (
                                 <Poster media_type={media_type} key={item.id} item={item} />

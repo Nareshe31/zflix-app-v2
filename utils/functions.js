@@ -80,5 +80,6 @@ export const getYear = (date) => {
           : Math.abs(Number(labelValue));
   }
   
+export const TMDB_BASE_IMAGE_PATH=(size)=>`https://image.tmdb.org/t/p/${size}`
   export const overview =
     "ZFlix is the largest free streaming platform for movies and tv shows. Collaborative media and info service featuring high quality content for a huge selection of titles and new releases! Available in all countries.";

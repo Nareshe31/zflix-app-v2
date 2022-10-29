@@ -1,13 +1,19 @@
 import { useRouter } from "next/router";
+import PageHead from "../../../molecules/PageHead";
 import PosterContainer from "../../../molecules/PosterContainer";
 import { get } from "../../../service/api-fetch";
+import { overview } from "../../../utils/functions";
 
 export default function TvPage({tv_data_on_the_air}) {
     const router=useRouter()
     const {language}=router.query
     return (
         <div>
-             
+            <PageHead
+                title={"TV Shows / ZFlix"}
+                overview={overview}
+                image_path="/icons/apple-touch-icon.png"
+            />
             <PosterContainer
                 title={"Now airing shows"}
                 media_type="tv"

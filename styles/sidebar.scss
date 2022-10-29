@@ -145,7 +145,7 @@ $background-color_5: transparent;
 .sidebar.expand+.sidebar-expanded-overlay {
 	width: calc(100% - var(--sidebar-expanded-width));
 	opacity: 1;
-	transition: opacity 0.3s 0.1s ease-in-out;
+	transition: opacity 0.3s 0.2s ease-in-out;
 }
 .sidebar-handle {
 	font-size: 1.2rem;
@@ -159,27 +159,7 @@ $background-color_5: transparent;
 		font-size: inherit;
 		color: $color_2;
 		padding: 10px 5px;
-        .ham{
-            width: 20px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            .line-1,.line-3{
-                width: 40%;
-                height: 2px;
-                background-color: var(--menu-link-text-color);
-            }
-            .line-1{
-                align-self: flex-end;
-            }
-            .line-2{
-                width: 80%;
-                align-self: center;
-                background-color: var(--menu-link-text-color);
-                height: 2px;
-            }
-        }
+        
 	}
 	button.close {
 		display: none;
@@ -187,6 +167,27 @@ $background-color_5: transparent;
 	}
 	&:hover {
 		color: $color_3;
+	}
+}
+.ham{
+	width: 20px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	.line-1,.line-3{
+		width: 40%;
+		height: 2px;
+		background-color: var(--menu-link-text-hover-color);
+	}
+	.line-1{
+		align-self: flex-end;
+	}
+	.line-2{
+		width: 80%;
+		align-self: center;
+		background-color: var(--menu-link-text-hover-color);
+		height: 2px;
 	}
 }
 .menu-wrapper {
@@ -268,6 +269,80 @@ $background-color_5: transparent;
 }
 @media screen and (max-width:560px) {
 	.sidebar {
-		display: none;
+		margin-left: calc(-1 * var(--sidebar-expanded-width));
+		width: var(--sidebar-expanded-width) !important;
+		background-color: $background-color_1;
+		backdrop-filter: blur(20px);
+		.sidebar-handle .expand{
+			opacity: 0;
+		}
+		.menu-list {
+			align-items: flex-start;
+			.menu-link.menu-active {
+				background-color: $background-color_3;
+				.icon {
+					background-color: $background-color_5;
+					color: var(--menu-link-text-hover-color);
+					&:hover{
+						color: var(--menu-link-text-hover-color);
+					}
+				}
+			}
+			.menu-link {
+				.icon {
+					margin-right: 0.4rem;
+					&:hover {
+						background-color: transparent;
+						color: var(--menu-link-text-color);
+					}
+					&::before {
+						display: none !important;
+					}
+				}
+				&:hover {
+					.icon {
+						// color: $color_3;
+					}
+				}
+			}
+		}
+		.sidebar-handle {
+			button.close {
+				display: block;
+			}
+			justify-content: space-between;
+			margin-right: 20px;
+			visibility: visible !important;
+			button.expand {
+				visibility: hidden;
+			}
+		}
+		.menu-wrapper {
+			margin: 0;
+			.menu-list {
+				a {
+					width: 100%;
+					.menu-link {
+						width: 100%;
+						padding: 6px 10px 6px 12px;
+						font-weight: 400;
+						&:hover {
+							background-color: $background-color_3;
+							backdrop-filter: blur(10px);
+						}
+					}
+				}
+			}
+		}
+		.nav-link-text {
+			opacity: 1 !important;
+			visibility: visible !important;
+			display: inline-block !important;
+			width: max-content !important;
+			transition: all 0.3s 0.1s ease-in-out !important;
+		}
+	}
+	.sidebar.expand{
+		margin-left: 0;
 	}
 }

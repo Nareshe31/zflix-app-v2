@@ -53,7 +53,7 @@ export default function Sidebar({ }) {
         {
             id: 3,
             url: "/tv-shows",
-            name: "Tv Shows",
+            name: "TV Shows",
             icon: "fa-solid fa-tv",
             addBaseURL:true
         },

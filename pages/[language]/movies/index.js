@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import PosterContainer from "../../../molecules/PosterContainer";
 import { get } from "../../../service/api-fetch";
 import { getCookie, setCookie } from 'cookies-next';
+import PageHead from "../../../molecules/PageHead";
+import { overview } from "../../../utils/functions";
 
 export default function MoviePage({movie_data_upcoming}) {
     const router=useRouter()
@@ -10,8 +12,12 @@ export default function MoviePage({movie_data_upcoming}) {
     "alpha-2": "",
     "country-code": ""}
     return (
-        <div>
-             
+        <>
+             <PageHead
+                title={"Movies / ZFlix"}
+                overview={overview}
+                image_path="/icons/apple-touch-icon.png"
+            />
             <PosterContainer
                 title={"Upcoming movies"}
                 media_type="movie"
@@ -49,7 +55,7 @@ export default function MoviePage({movie_data_upcoming}) {
                 media_type="movie"
                 data_types={[{name:"Top rated",value:"top_rated"}]}
             />
-        </div>
+        </>
     );
 }
 
@@ -73,9 +79,7 @@ export async function getServerSideProps({ query, req,res }) {
             "alpha-2": data.countryCode,
             "country-code": ""}
             setCookie('region',region,{req,res})
-            console.log(data);
         }
-        console.log(region);
         const movie_data_upcoming = await get({
             url: `/movie/upcoming`,
             type: "tmdb",

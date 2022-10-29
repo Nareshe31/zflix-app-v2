@@ -7,9 +7,7 @@ import { setCookie } from 'cookies-next';
 
 export default function Home({
     movie_data_day,
-    movie_data_week,
     tv_data_day,
-    tv_data_week,
 }) {
     const router=useRouter()
     const {language}=router.query
@@ -33,19 +31,19 @@ export default function Home({
 
     return (
         <>
-            <select onChange={(e)=>{setCookie("region",e.target.value)}} name="codes" id="codes">
+            {/* <select onChange={(e)=>{setCookie("region",e.target.value)}} name="codes" id="codes">
                 {isocodes.map((code)=><option key={JSON.stringify(code)} value={JSON.stringify(code)}>{code.name}</option>)}
                 
-            </select>
+            </select> */}
             <PageHead
-                title={"ZFlix - Watch Movies & TV Shows"}
+                title={"Explore / ZFlix"}
                 overview={overview}
                 image_path="/icons/apple-touch-icon.png"
             />
             <PosterContainer
                 title={"Trending movies"}
                 media_type="movie"
-                all_data={{day:movie_data_day,week:movie_data_week}}
+                all_data={{day:movie_data_day}}
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:false,week:true}}
                 meta_data={{week:{
@@ -59,7 +57,7 @@ export default function Home({
             <PosterContainer
                 title={"Trending shows"}
                 media_type="tv"
-                all_data={{day:tv_data_day,week:tv_data_week}}
+                all_data={{day:tv_data_day}}
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:true,week:true}}
                 meta_data={{
