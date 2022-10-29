@@ -34,9 +34,11 @@ export default function MoviePage({ data }) {
             <section className="watch-container">
                 <iframe
                     id="watch-frame"
-                    allowFullScreen
+                    webkitallowfullscreen=""
+                    mozallowfullscreen=""
+                    allowfullscreen=""
                     frameBorder={0}
-                    src={`https://2embed.to/embed/tmdb/movie?id=${data.id}`}
+                    src={`https://www.2embed.to/embed/tmdb/movie?id=${data.id}`}
                 >
                     {" "}
                 </iframe>
