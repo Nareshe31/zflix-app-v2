@@ -262,10 +262,11 @@ $background-color_3: #222;
 		}
 	}
 }
+
 @media screen and (min-width:1120px) {
 	.items {
 		.item {
-			width: calc(100% / 8);
+			width: calc(100% / 8) !important;
 		}
 	}
 }
@@ -301,6 +302,9 @@ $background-color_3: #222;
 	.items {
 		.item {
 			width: calc(100% / 3);
+			.data{
+				// display: none;
+			}
 			.data h3{
 				font-size: 0.8rem;
 			}

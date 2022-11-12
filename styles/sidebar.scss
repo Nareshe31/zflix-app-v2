@@ -55,12 +55,14 @@ $background-color_5: transparent;
 	display: flex;
 	flex-direction: column;
 	padding-top: 10px;
+	// overflow-x: hidden;
 }
 .sidebar.expand {
 	width: var(--sidebar-expanded-width);
 	transition: all 0.3s ease-in-out;
-	background-color: $background-color_1;
-	backdrop-filter: blur(20px);
+	// background-color: $background-color_1;
+	background-color: #020202;
+	// backdrop-filter: blur(20px);
 	.icon {
         
 	}
@@ -132,7 +134,7 @@ $background-color_5: transparent;
 }
 .sidebar-expanded-overlay {
 	background-color: $background-color_2;
-	backdrop-filter: blur(1px);
+	// backdrop-filter: blur(1px);
 	z-index: 4;
 	position: fixed;
 	top: 0;

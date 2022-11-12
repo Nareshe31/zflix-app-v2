@@ -37,17 +37,21 @@ export default function Poster({ item, media_type }) {
                     <i className="fa-regular fa-bookmark"></i>
                 </div>
                 {/* <div className="featu">Featured</div> */}
-                {/* <Link href={link}> */}
-                    <a href={link} title={title}>
+                <Link href={link}>
+                    <a 
+                    // href={link} 
+                    title={title}>
                         <div className="see play4"></div>
                     </a>
-                {/* </Link> */}
+                </Link>
             </div>
             <div className="data dfeatur">
                 <h3 title={title}>
-                    {/* <Link href={link}> */}
-                        <a href={link}>{title}</a>
-                    {/* </Link> */}
+                    <Link href={link}>
+                        <a 
+                        // href={link}
+                        >{title}</a>
+                    </Link>
                 </h3>
                 <span>{year}</span>
             </div>

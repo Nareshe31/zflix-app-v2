@@ -15,11 +15,11 @@ export default function MoviePage({ data }) {
     return (
         <>
             <PageHead
-                title={`Watch ${data.title} (${getYear(data.release_date)}) online`}
+                title={`Watch ${data.title} (${getYear(data.release_date)}) os`}
                 image_path={TMDB_BASE_IMAGE_PATH('w342')+data.poster_path}
                 overview={data.overview}
             />
-            {/* <header className="bread-crumbs">
+            <header className="bread-crumbs">
                 <span>
                     <Link href={`/${language}`}>Home</Link>
                 </span>
@@ -30,7 +30,7 @@ export default function MoviePage({ data }) {
                 
                 <span className="separator">/</span>
                 <span>{data.title}</span>
-            </header> */}
+            </header>
             <section className="watch-container">
                 <iframe
                     id="watch-frame"
