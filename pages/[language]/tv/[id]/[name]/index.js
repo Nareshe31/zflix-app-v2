@@ -16,11 +16,11 @@ import {
 export default function TvPage({ data }) {
     // console.log(data);
     const router = useRouter();
-    const { language, season = "1", episode = "1", id, name } = router.query;
-    const [additionalData, setadditionalData] = useState({ season, episode });
+    const { language, season, episode, id, name } = router.query;
+    const [additionalData, setadditionalData] = useState({ season:season?season:"1", episode:episode?episode:"1" });
     const [seasonDetail, setseasonDetail] = useState({ loading: true, data: [] });
     const poster_path = `${TMDB_BASE_IMAGE_PATH("w342")}${data.poster_path}`;
-
+    const showWatchContainer=season!==undefined &&season!=="" && episode!==undefined &&episode!==""
     useEffect(() => {
         getSeasonDetails(additionalData.season);
         return () => { };
@@ -95,7 +95,7 @@ export default function TvPage({ data }) {
                 <span className="separator">/</span>
                 <span>{data.name}</span>
             </header>
-            {/* <section className="watch-container">
+            <section style={{"display":showWatchContainer?"block":"none"}} className="watch-container">
                 <iframe
                     id="watch-frame"
                     webkitallowfullscreen=""
@@ -106,7 +106,7 @@ export default function TvPage({ data }) {
                 >
                     {" "}
                 </iframe>
-            </section> */}
+            </section>
             <section className="movie-details">
                 <div className="poster-container">
                     <Image
