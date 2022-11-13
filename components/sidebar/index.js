@@ -46,6 +46,7 @@ export default function Sidebar({ }) {
         {
             id: 2,
             url: "/movies",
+            alternalteurl:"/movie",
             name: "Movies",
             icon: "fa-solid fa-film",
             addBaseURL:true
@@ -53,6 +54,7 @@ export default function Sidebar({ }) {
         {
             id: 3,
             url: "/tv-shows",
+            alternalteurl:"/tv",
             name: "TV Shows",
             icon: "fa-solid fa-tv",
             addBaseURL:true
@@ -83,10 +85,11 @@ export default function Sidebar({ }) {
     const Menu = ({ item }) => {
         const first_part=item.addBaseURL?`/${language}`:''
         const link=first_part+item.url
+        const linkclass=`menu-link${router.asPath===link || (item.alternalteurl?(router.asPath.includes(first_part+item.alternalteurl)):false)?' menu-active':''}`
         return (
             <Link href={`${first_part}${item.url}`} passHref shallow>
                 <a >
-                    <li className={`menu-link ${router.asPath===link?'menu-active':''}`}>
+                    <li className={linkclass}>
                         <span className="icon" data-desc={item.name}>
                             <i className={item.icon}></i>
                         </span>

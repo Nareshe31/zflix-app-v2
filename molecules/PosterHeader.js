@@ -16,7 +16,7 @@ export default function Header({title,data_type,data,data_types,change_view,cont
             <button onClick={()=>{
                 // posterSectionRef.current.classList.toggle('hide');
                 // setisHide(prev=>!prev)
-                change_view(prev=>prev==="vertical"?"horizontal":"vertical")
+                change_view()
             }}>
                 {
                     containerview==="horizontal"?

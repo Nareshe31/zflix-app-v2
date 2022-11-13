@@ -21,11 +21,16 @@ export default function TvPage({ data }) {
     const [seasonDetail, setseasonDetail] = useState({ loading: true, data: [] });
     const poster_path = `${TMDB_BASE_IMAGE_PATH("w342")}${data.poster_path}`;
     const showWatchContainer=season!==undefined &&season!=="" && episode!==undefined &&episode!==""
+    
     useEffect(() => {
         getSeasonDetails(additionalData.season);
         return () => { };
-    }, [additionalData.season]);
+    }, [additionalData]);
 
+    useEffect(() => {
+        setadditionalData({ season:season?season:"1", episode:episode?episode:"1" })
+    }, [data.id])
+    
     async function getSeasonDetails() {
         try {
             setseasonDetail({ loading: true, data: [] });
@@ -61,7 +66,7 @@ export default function TvPage({ data }) {
                                 href={link(episode)}
                             >
                                 <a>
-                                    <img className="episode-poster" style={{"objectFit":"cover"}} src={TMDB_BASE_IMAGE_PATH("w342")+episode.still_path} alt={`${data.name} Season ${episode.season_number} Episode ${episode.episode_number} poster`} srcset="" />
+                                    <img className="episode-poster" style={{"objectFit":"cover"}} src={TMDB_BASE_IMAGE_PATH("w342")+episode.still_path} alt={`${data.name} Season ${episode.season_number} Episode ${episode.episode_number} poster`} srcSet="" />
                                     <span className="episode-number text-lg">Episode {episode.episode_number}</span>
                                     <span className="episode-title text-lg">{episode.name}</span>
                                 </a>
@@ -89,7 +94,7 @@ export default function TvPage({ data }) {
                 <span className="separator">/</span>
 
                 <span>
-                    <Link href={`/${language}/tv-shows`}>Tv Shows</Link>
+                    <Link href={`/${language}/tv-shows`}>TV Shows</Link>
                 </span>
 
                 <span className="separator">/</span>
@@ -156,7 +161,7 @@ export default function TvPage({ data }) {
                             ))}
                     </select>
                 </header>
-                <EpisodesContainer seasonData={seasonDetail} />
+                <EpisodesContainer key={"seasons"+data.id} seasonData={seasonDetail} />
             </section>
 
             <PosterContainer
@@ -165,6 +170,7 @@ export default function TvPage({ data }) {
                 media_type="tv"
                 data_types={[{ name: "Recommendations", value: "recommendations" }]}
                 view="horizontal"
+                key={"recommendations"+data.id}
                 meta_data={{
                     recommendations: {
                         url: `/tv/${data.id}/recommendations`,
@@ -179,6 +185,7 @@ export default function TvPage({ data }) {
                 media_type="tv"
                 data_types={[{ name: "Similar", value: "similar" }]}
                 view="horizontal"
+                key={"similar"+data.id}
                 meta_data={{
                     similar: {
                         url: `/tv/${data.id}/similar`,
@@ -193,7 +200,6 @@ export default function TvPage({ data }) {
 
 export async function getServerSideProps(context) {
     const { id, language } = context.query;
-    console.log({ id, language });
     const data = await get({
         url: `/tv/${id}`,
         type: "tmdb",

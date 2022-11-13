@@ -58,7 +58,7 @@ export default function MoviePage({ data }) {
                     <p className="text-sm year-runtime"><span>{getDate(data.release_date)}</span><span className="dot"></span> <span>{data.runtime}mins</span></p>
                     <div className="genres text-sm">{data.genres.map(item=><span className="genre" key={item.id}>{item.name}</span>)}</div>
                     <p className="text-sm">TMDB Rating {Number(data.vote_average).toFixed(1)}/10</p>
-                    <button><i class="fa-regular fa-bookmark"></i>Add to wishlist</button>
+                    <button><i className="fa-regular fa-bookmark"></i>Add to wishlist</button>
                 </div>
             </section>
             <section></section>
@@ -69,6 +69,7 @@ export default function MoviePage({ data }) {
                 media_type="movie"
                 data_types={[{ name: "Recommendations", value: "recommendations" }]}
                 view="horizontal"
+                key={"recommendations "+data.id}
                 meta_data={{recommendations:{
                     url: `/movie/${data.id}/recommendations`,
                     type: "tmdb",
@@ -83,6 +84,7 @@ export default function MoviePage({ data }) {
                 media_type="movie"
                 data_types={[{ name: "Similar", value: "similar" }]}
                 view="horizontal"
+                key={"similar "+data.id}
                 meta_data={{similar:{
                     url: `/movie/${data.id}/similar`,
                     type: "tmdb",

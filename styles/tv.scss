@@ -10,7 +10,6 @@
     margin-top: 10px;
     .episode-container{
         // padding: 10px;
-        width: calc(100% / 5 - 10px);
         position: relative;
         margin-bottom: 10px;
         span{
@@ -30,9 +29,43 @@
         }
     }
 }
+@media screen and (min-width:1120px) {
+	.episodes-container {
+		.episode-container {
+			width: calc(100% / 6 - 10px);
+		}
+	}
+}
+@media screen and (min-width:1000px) {
+	.episodes-container {
+		.episode-container {
+			width: calc(100% / 5 - 10px);
+		}
+	}
+}
+@media screen and (min-width:880px) and (max-width:999px) {
+	.episodes-container {
+		.episode-container {
+			width: calc(100% / 4 - 10px);
+		}
+	}
+}
+@media screen and (min-width:760px) and (max-width:879px) {
+	.episodes-container {
+		.episode-container {
+			width: calc(100% / 4 - 10px);
+		}
+	}
+}
+@media screen and (min-width:640px) and (max-width:759px) {
+	.episodes-container {
+		.episode-container {
+			width: calc(100% / 3 - 10px);
+		}
+	}
+}
 
-
-@media screen and (max-width:640px) {
+@media screen and (max-width:639px) {
     .season-details{
         margin: 0 10px;
     }
