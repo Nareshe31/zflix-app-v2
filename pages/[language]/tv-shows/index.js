@@ -4,7 +4,7 @@ import PosterContainer from "../../../molecules/PosterContainer";
 import { get } from "../../../service/api-fetch";
 import { overview } from "../../../utils/functions";
 
-export default function TvPage({tv_data_on_the_air}) {
+export default function TvPage() {
     const router=useRouter()
     const {language}=router.query
     return (
@@ -17,9 +17,16 @@ export default function TvPage({tv_data_on_the_air}) {
             <PosterContainer
                 title={"Now airing shows"}
                 media_type="tv"
-                all_data={{on_the_air:tv_data_on_the_air}}
                 data_types={[{name:"Airing",value:"on_the_air"}]}
-                loadData={{on_the_air:false}}
+                loadData={{on_the_air:true}}
+                meta_data={{on_the_air:{
+                    url: `/tv/on_the_air`,
+                    type: "tmdb",
+                    params: [
+                        { key: "language", value: language },
+                        { key: "page", value: 1 },
+                    ],
+                }}}
             />
             <PosterContainer
                 title={"Popular shows"}
@@ -86,7 +93,7 @@ export async function getServerSideProps({ query, req }) {
             props: {
                 // movie_data_popular,
                 // movie_data_top_rated,
-                tv_data_on_the_air
+                tv_data_on_the_air:{}
             },
         };
     } catch (error) {

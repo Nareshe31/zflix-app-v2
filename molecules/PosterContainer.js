@@ -41,6 +41,7 @@ export default function PosterContainer({
     const renderCounter = useRef(0);
 
     useEffect(() => {
+        console.log(data.loadData[data.data_type]);
         if (data.loadData[data.data_type]) {
             getData();
         }
@@ -50,7 +51,6 @@ export default function PosterContainer({
     }, [data.data_type]);
 
     const getData = async () => {
-        setdata((prev) => ({ ...prev, loading: true }));
         const responsedata = await get(meta_data[data.data_type]);
         setdata((prev) => ({
             ...prev,
@@ -77,7 +77,7 @@ export default function PosterContainer({
                 posterSectionRef={posterSection}
                 data_types={data_types}
                 title={title}
-                data_type={change_data_type}
+                change_data_type={change_data_type}
                 data={data.data_type}
                 containerview={data.view}
             />
@@ -86,7 +86,7 @@ export default function PosterContainer({
                     data={data.all_data[data.data_type]}
                     loading={data.loading}
                     meta_data={meta_data}
-                    key={"owl "+data.view+" " + JSON.stringify(data.all_data)}
+                    key={"owl "+data.view+" "+data.loading+" " + JSON.stringify(data.all_data)}
                     media_type={media_type}
                 />
             ) : (
@@ -94,7 +94,7 @@ export default function PosterContainer({
                     data={data.all_data[data.data_type]}
                     loading={data.loading}
                     media_type={media_type}
-                    key={"default "+data.view+" " + JSON.stringify(data.all_data)}
+                    key={"default "+data.view+" "+data.loading+" " + JSON.stringify(data.all_data)}
                     posterSection={posterSection}
                 />
             )}

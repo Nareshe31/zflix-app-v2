@@ -12,8 +12,8 @@ export const getYear = (date) => {
   export const getLink = (item, type,language="en") => {
     // const language=typeof window !=="undefined" && localStorage.getItem('language') || 'en'
     if (type === "movie") {
-      return `/${language}/movie/${item.id}/${covertToLinkWords(item.title)}${item.release_date ? "-" + getYear(item.release_date) : ""
-        }`;
+      const name=`${covertToLinkWords(item.title)}${item.release_date ? "-" + getYear(item.release_date) : ""}`
+      return `/${language}/movie/${item.id}/${name}`;
     } else if (type === "tv")
       return `/${language}/tv/${item.id}/${covertToLinkWords(item.name)}${item.first_air_date ? "-" + getYear(item.first_air_date) : ""
         }`;

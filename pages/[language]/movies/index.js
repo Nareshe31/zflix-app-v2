@@ -5,7 +5,7 @@ import { getCookie, setCookie } from 'cookies-next';
 import PageHead from "../../../molecules/PageHead";
 import { overview } from "../../../utils/functions";
 
-export default function MoviePage({movie_data_upcoming}) {
+export default function MoviePage() {
     const router=useRouter()
     const {language}=router.query
     const region=getCookie('region')?JSON.parse(getCookie('region')):{"name": "",
@@ -21,9 +21,17 @@ export default function MoviePage({movie_data_upcoming}) {
             <PosterContainer
                 title={"Upcoming movies"}
                 media_type="movie"
-                all_data={{upcoming:movie_data_upcoming}}
                 data_types={[{name:"Upcoming",value:"upcoming"}]}
-                loadData={{upcoming:false}}
+                loadData={{upcoming:true}}
+                meta_data={{upcoming:{
+                    url: `/movie/upcoming`,
+                    type: "tmdb",
+                    params: [
+                        { key: "language", value: language },
+                        { key: "page", value: 1 },
+                        {key:"region",value:region["alpha-2"]}
+                    ],
+                }}}
             />
             <PosterContainer
                 title={`Popular movies in ${region.name}`}
@@ -80,14 +88,14 @@ export async function getServerSideProps({ query, req,res }) {
             "country-code": ""}
             setCookie('region',region,{req,res})
         }
-        const movie_data_upcoming = await get({
-            url: `/movie/upcoming`,
-            type: "tmdb",
-            params: [{ key: "language", value: language },{key:'page',value:1},{key:"region",value:region["alpha-2"]}],
-        });
+        // const movie_data_upcoming = await get({
+        //     url: `/movie/upcoming`,
+        //     type: "tmdb",
+        //     params: [{ key: "language", value: language },{key:'page',value:1},{key:"region",value:region["alpha-2"]}],
+        // });
         return {
             props: {
-                movie_data_upcoming
+                
             },
         };
     } catch (error) {

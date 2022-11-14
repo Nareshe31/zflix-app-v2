@@ -62,15 +62,16 @@ export default function TvPage({ data }) {
                 <div className="episodes-container">
                     {seasonData.data.episodes?.map((episode) => (
                         <div className="episode-container" key={episode.id}>
-                            <Link
+                            {/* <Link
                                 href={link(episode)}
-                            >
-                                <a>
+                                passHref
+                            > */}
+                                <a href={link(episode)}>
                                     <img className="episode-poster" style={{"objectFit":"cover"}} src={TMDB_BASE_IMAGE_PATH("w342")+episode.still_path} alt={`${data.name} Season ${episode.season_number} Episode ${episode.episode_number} poster`} srcSet="" />
                                     <span className="episode-number text-lg">Episode {episode.episode_number}</span>
                                     <span className="episode-title text-lg">{episode.name}</span>
                                 </a>
-                            </Link>
+                            {/* </Link> */}
                         </div>
                     ))}
                 </div>

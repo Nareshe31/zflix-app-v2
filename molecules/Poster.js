@@ -12,8 +12,9 @@ export default function Poster({ item, media_type }) {
         media_type === "movie"
             ? getYear(item.release_date)
             : getYear(item.first_air_date);
-    const link = getLink(item, media_type,language);
-    const imageURL=`${TMDB_BASE_IMAGE_PATH('w342')}${item.poster_path?item.poster_path:"/wZwxopzmqOBmS44Y2q4LUsOiFTC.jpg"}`
+    const link = getLink(item, media_type, language);
+    const imageURL = `${TMDB_BASE_IMAGE_PATH("w342")}${item.poster_path ? item.poster_path : "/wZwxopzmqOBmS44Y2q4LUsOiFTC.jpg"
+        }`;
     return (
         <article key={item.id} id={`post-${item.id}`} className="item movies">
             <div className="poster">
@@ -37,21 +38,17 @@ export default function Poster({ item, media_type }) {
                     <i className="fa-regular fa-bookmark"></i>
                 </div>
                 {/* <div className="featu">Featured</div> */}
-                <Link href={link}>
-                    <a 
-                    // href={link} 
-                    title={title}>
+                {/* <Link href={link} passHref={true} > */}
+                    <a href={link} title={title}>
                         <div className="see play4"></div>
                     </a>
-                </Link>
+                {/* </Link> */}
             </div>
             <div className="data dfeatur">
                 <h3 title={title}>
-                    <Link href={link}>
-                        <a 
-                        // href={link}
-                        >{title}</a>
-                    </Link>
+                    {/* <Link href={link} passHref={true}> */}
+                        <a href={link}>{title}</a>
+                    {/* </Link> */}
                 </h3>
                 <span>{year}</span>
             </div>

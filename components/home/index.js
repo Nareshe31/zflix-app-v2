@@ -5,10 +5,7 @@ import PosterContainer from "../../molecules/PosterContainer";
 import { overview } from "../../utils/functions";
 import { setCookie } from 'cookies-next';
 
-export default function Home({
-    movie_data_day,
-    tv_data_day,
-}) {
+export default function Home() {
     const router=useRouter()
     const {language}=router.query
 
@@ -43,21 +40,27 @@ export default function Home({
             <PosterContainer
                 title={"Trending movies"}
                 media_type="movie"
-                all_data={{day:movie_data_day}}
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
-                loadData={{day:false,week:true}}
+                loadData={{day:true,week:true}}
                 meta_data={{week:{
                     url: `/trending/movie/week`,
                     type: "tmdb",
                     params: [
                         { key: "language", value: language }
                     ],
-                }}}
+                },
+                day:{
+                    url: `/trending/movie/day`,
+                    type: "tmdb",
+                    params: [
+                        { key: "language", value: language }
+                    ],
+                }
+            }}
             />
             <PosterContainer
                 title={"Trending shows"}
                 media_type="tv"
-                all_data={{day:tv_data_day}}
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:true,week:true}}
                 meta_data={{

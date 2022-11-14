@@ -15,7 +15,7 @@ export default function MoviePage({ data }) {
     return (
         <>
             <PageHead
-                title={`Watch ${data.title} (${getYear(data.release_date)}) os`}
+                title={`Watch ${data.title} (${getYear(data.release_date)}) / ZFlix`    }
                 image_path={TMDB_BASE_IMAGE_PATH('w342')+data.poster_path}
                 overview={data.overview}
             />
@@ -106,7 +106,7 @@ export async function getServerSideProps(context) {
             { key: "language", value: language },
             {
                 key: "append_to_response",
-                value: "videos,images,credits",
+                value: "videos,images,credits"
             },
         ],
     });
