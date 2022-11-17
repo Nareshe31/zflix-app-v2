@@ -87,7 +87,7 @@ export default function Sidebar({ }) {
         const link=first_part+item.url
         const linkclass=`menu-link${router.asPath===link || (item.alternalteurl?(router.asPath.includes(first_part+item.alternalteurl)):false)?' menu-active':''}`
         return (
-            <Link href={`${first_part}${item.url}`} passHref shallow>
+            <Link href={`${first_part}${item.url}`} passHref>
                 <a >
                     <li className={linkclass}>
                         <span className="icon" data-desc={item.name}>

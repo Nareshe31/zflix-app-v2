@@ -6,17 +6,21 @@ export const getYear = (date) => {
     return s.replace(/\s+/g, "-").toLowerCase();
   };
   
-  export const removeSpecialCharacters = (title) =>
-    title ? title.replace(/[&#,\-–_+()$~%'.:"!*?<>{}]/g, " ") : "";
+  export const removeSpecialCharacters = (title) =>{
+    const t1=title ? title.replace(/[#,\-–_()$~%!*?<>{}]/g, " ") : "";
+    const t2=t1?t1.replace(/['.:"]/g, ""):""
+    return t2
+  }
   
   export const getLink = (item, type,language="en") => {
     // const language=typeof window !=="undefined" && localStorage.getItem('language') || 'en'
     if (type === "movie") {
-      const name=`${covertToLinkWords(item.title)}${item.release_date ? "-" + getYear(item.release_date) : ""}`
+      // ${item.release_date ? "-" + getYear(item.release_date) : ""}
+      const name=`${covertToLinkWords(item.title)}`
       return `/${language}/movie/${item.id}/${name}`;
     } else if (type === "tv")
-      return `/${language}/tv/${item.id}/${covertToLinkWords(item.name)}${item.first_air_date ? "-" + getYear(item.first_air_date) : ""
-        }`;
+      // ${item.first_air_date ? "-" + getYear(item.first_air_date) : ""}
+      return `/${language}/tv/${item.id}/${covertToLinkWords(item.name)}`;
     else {
       return item ? `/${language}/person/${item.id}/${covertToLinkWords(item.name)}` : "";
     }

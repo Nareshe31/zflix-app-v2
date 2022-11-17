@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import PageHead from "../../../../../molecules/PageHead";
 import PosterContainer from "../../../../../molecules/PosterContainer";
 import { get } from "../../../../../service/api-fetch";
@@ -12,6 +13,7 @@ export default function MoviePage({ data }) {
     const router=useRouter()
     const {language}=router.query
     const poster_path=`${TMDB_BASE_IMAGE_PATH('w342')}${data.poster_path}`
+    
     return (
         <>
             <PageHead
@@ -34,13 +36,14 @@ export default function MoviePage({ data }) {
             <section className="watch-container">
                 <iframe
                     id="watch-frame"
+                    key={data.id}
                     webkitallowfullscreen=""
                     mozallowfullscreen=""
                     allowfullscreen=""
                     frameBorder={0}
                     src={`https://www.2embed.to/embed/tmdb/movie?id=${data.id}`}
+                    title={data.id}
                 >
-                    {" "}
                 </iframe>
             </section>
             <section className="movie-details">

@@ -1,7 +1,11 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
 
 export default function Header() {
+
+  const router=useRouter()
+  const {language}=router.query
 
     const expandSidebar = () => {
         const asideRight = document.body;
@@ -49,7 +53,7 @@ export default function Header() {
                 <div className="line-3"></div>
             </div>
           </button>
-            <Link href={"/en"}>ZFlix</Link>
+            <Link href={`/${language}`}>ZFlix</Link>
           </h2>
           <div>
             <button>Login / Register</button>

@@ -62,16 +62,16 @@ export default function TvPage({ data }) {
                 <div className="episodes-container">
                     {seasonData.data.episodes?.map((episode) => (
                         <div className="episode-container" key={episode.id}>
-                            {/* <Link
+                            <Link
                                 href={link(episode)}
                                 passHref
-                            > */}
-                                <a href={link(episode)}>
+                            >
+                                <a >
                                     <img className="episode-poster" style={{"objectFit":"cover"}} src={TMDB_BASE_IMAGE_PATH("w342")+episode.still_path} alt={`${data.name} Season ${episode.season_number} Episode ${episode.episode_number} poster`} srcSet="" />
                                     <span className="episode-number text-lg">Episode {episode.episode_number}</span>
                                     <span className="episode-title text-lg">{episode.name}</span>
                                 </a>
-                            {/* </Link> */}
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -84,7 +84,7 @@ export default function TvPage({ data }) {
     return (
         <>
             <PageHead
-                title={`Watch ${data.name} (${getYear(data.first_air_date)}) online`}
+                title={`Watch ${data.name} (${getYear(data.first_air_date)}) / ZFlix`}
                 image_path={TMDB_BASE_IMAGE_PATH("w342") + data.poster_path}
                 overview={data.overview}
             />
@@ -107,6 +107,7 @@ export default function TvPage({ data }) {
                     webkitallowfullscreen=""
                     mozallowfullscreen=""
                     allowfullscreen=""
+                    key={data.id+season+episode}
                     frameBorder={0}
                     src={`https://www.2embed.to/embed/tmdb/tv?id=${data.id}&s=${season}&e=${episode}`}
                 >
@@ -128,7 +129,7 @@ export default function TvPage({ data }) {
                     <p className="text-sm year-runtime">
                         <span>{getDate(data.first_air_date)}</span>
                         <span className="dot"></span>{" "}
-                        <span>{data.episode_run_time[0]}mins</span>
+                        <span>{data?.episode_run_time[0]}mins</span>
                     </p>
                     <div className="genres text-sm">
                         {data.genres.map((item) => (
