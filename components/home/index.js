@@ -42,6 +42,7 @@ export default function Home() {
                 media_type="movie"
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:true,week:true}}
+                show_change_view={true}
                 meta_data={{week:{
                     url: `/trending/movie/week`,
                     type: "tmdb",
@@ -63,6 +64,7 @@ export default function Home() {
                 media_type="tv"
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:true,week:true}}
+                show_change_view={true}
                 meta_data={{
                     day:{
                         url: `/trending/tv/day`,

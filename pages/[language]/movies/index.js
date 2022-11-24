@@ -23,6 +23,7 @@ export default function MoviePage() {
                 media_type="movie"
                 data_types={[{name:"Upcoming",value:"upcoming"}]}
                 loadData={{upcoming:true}}
+                show_change_view={true}
                 meta_data={{upcoming:{
                     url: `/movie/upcoming`,
                     type: "tmdb",
@@ -45,12 +46,14 @@ export default function MoviePage() {
                         {key:"region",value:region["alpha-2"]}
                     ],
                 }}}
+                show_change_view={true}
                 media_type="movie"
                 data_types={[{name:"Popular",value:"popular"}]}
             />
             <PosterContainer
                 title={"Top rated movies"}
                 loadData={{top_rated:true}}
+                show_change_view={true}
                 meta_data={{top_rated:{
                     url: `/movie/top_rated`,
                     type: "tmdb",

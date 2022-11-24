@@ -7,6 +7,7 @@ export default function Header({
     data_types,
     change_view,
     containerview,
+    show_change_view
 }) {
     return (
         <header>
@@ -26,6 +27,7 @@ export default function Header({
                     </div>
                 ) : null}
             </div>
+            {show_change_view?
             <button
                 onClick={() => {
                     // posterSectionRef.current.classList.toggle('hide');
@@ -39,6 +41,9 @@ export default function Header({
                     <i className="fa-solid fa-grip"></i>
                 )}
             </button>
+            :
+                null
+            }
         </header>
     );
 }

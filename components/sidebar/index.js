@@ -61,10 +61,10 @@ export default function Sidebar({ }) {
         },
         {
             id: 4,
-            url: "/language",
-            name: "Language",
-            icon: "fa-solid fa-language",
-            addBaseURL:false
+            url: "/search",
+            name: "Search",
+            icon: "fa-solid fa-search",
+            addBaseURL:true
         },
         {
             id: 5,

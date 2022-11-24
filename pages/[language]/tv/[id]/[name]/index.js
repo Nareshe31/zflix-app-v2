@@ -106,7 +106,7 @@ export default function TvPage({ data }) {
                     id="watch-frame"
                     webkitallowfullscreen=""
                     mozallowfullscreen=""
-                    allowfullscreen=""
+                    allowFullScreen=""
                     key={data.id+season+episode}
                     frameBorder={0}
                     src={`https://www.2embed.to/embed/tmdb/tv?id=${data.id}&s=${season}&e=${episode}`}
@@ -173,6 +173,7 @@ export default function TvPage({ data }) {
                 data_types={[{ name: "Recommendations", value: "recommendations" }]}
                 view="horizontal"
                 key={"recommendations"+data.id}
+                show_change_view={true}
                 meta_data={{
                     recommendations: {
                         url: `/tv/${data.id}/recommendations`,
@@ -188,6 +189,7 @@ export default function TvPage({ data }) {
                 data_types={[{ name: "Similar", value: "similar" }]}
                 view="horizontal"
                 key={"similar"+data.id}
+                show_change_view={true}
                 meta_data={{
                     similar: {
                         url: `/tv/${data.id}/similar`,

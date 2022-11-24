@@ -128,13 +128,13 @@ $background-color_3: #222;
 			white-space: nowrap;
 			overflow: hidden;
 			color: $color_6;
-			line-height: 14px;
+			line-height: 20px;
 			&:hover {
 				color: $color_7;
 			}
 		}
 		span {
-			width: 100%;
+			// width: 100%;
 			font-size: 0.7rem;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -248,7 +248,6 @@ $background-color_3: #222;
 		z-index: 0;
 		-webkit-backdrop-filter: blur(5px);
 		backdrop-filter: blur(5px);
-		border-bottom-right-radius: 6px;
 		i {
 			margin-right: 5px;
 			color: $color_4;
@@ -267,6 +266,22 @@ $background-color_3: #222;
 			color: $color_5;
 		}
 	}
+	.media {
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding: 3px 8px;
+		transition: 0.2s;
+		z-index: 0;
+		padding: 2px 8px;
+		line-height: 18px;
+		font-size: 12px;
+		font-weight: 300;
+		background: rgba(50, 50, 50, 0.8);
+		color: $color_3;
+		backdrop-filter: blur(5px);
+		cursor: pointer;
+	}
 	img {
 		width: 100%;
 		height: auto;
@@ -277,6 +292,16 @@ $background-color_3: #222;
 	}
 }
 .bookmark {
+	&:hover {
+		+ {
+			.see {
+				transform: scale(0.75);
+				opacity: 1;
+			}
+		}
+	}
+}
+.media {
 	&:hover {
 		+ {
 			.see {

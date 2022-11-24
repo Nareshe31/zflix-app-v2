@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { getLink, getYear, TMDB_BASE_IMAGE_PATH } from "../utils/functions";
 
-export default function Poster({ item, media_type }) {
+export default function Poster({ item, media_type,show_media_type }) {
     const router = useRouter();
     let { language } = router.query;
 
@@ -37,6 +37,12 @@ export default function Poster({ item, media_type }) {
                 <div className="bookmark" onClick={(e) => e.preventDefault()}>
                     <i className="fa-regular fa-bookmark"></i>
                 </div>
+                {show_media_type?
+                    <div className="media">
+                        {{movie:"Movie",tv:"TV"}[media_type]}
+                    </div>
+                :null
+                }
                 {/* <div className="featu">Featured</div> */}
                 <Link href={link} passHref>
                     <a title={title}>

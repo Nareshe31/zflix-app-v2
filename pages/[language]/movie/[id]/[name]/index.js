@@ -39,7 +39,7 @@ export default function MoviePage({ data }) {
                     key={data.id}
                     webkitallowfullscreen=""
                     mozallowfullscreen=""
-                    allowfullscreen=""
+                    allowFullScreen=""
                     frameBorder={0}
                     src={`https://www.2embed.to/embed/tmdb/movie?id=${data.id}`}
                     title={data.id}
@@ -73,6 +73,7 @@ export default function MoviePage({ data }) {
                 data_types={[{ name: "Recommendations", value: "recommendations" }]}
                 view="horizontal"
                 key={"recommendations "+data.id}
+                show_change_view={true}
                 meta_data={{recommendations:{
                     url: `/movie/${data.id}/recommendations`,
                     type: "tmdb",
@@ -88,6 +89,7 @@ export default function MoviePage({ data }) {
                 data_types={[{ name: "Similar", value: "similar" }]}
                 view="horizontal"
                 key={"similar "+data.id}
+                show_change_view={true}
                 meta_data={{similar:{
                     url: `/movie/${data.id}/similar`,
                     type: "tmdb",

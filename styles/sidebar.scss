@@ -55,13 +55,15 @@ $background-color_5: transparent;
 	display: flex;
 	flex-direction: column;
 	padding-top: 10px;
+
 	// overflow-x: hidden;
 }
 .sidebar.expand {
 	width: var(--sidebar-expanded-width);
 	transition: all 0.3s ease-in-out;
 	// background-color: $background-color_1;
-	background-color: #020202;
+	background-color: #060606;
+	border-right: 0px;
 	// backdrop-filter: blur(20px);
 	.icon {
         
