@@ -7,7 +7,13 @@ import { overview } from "../../../utils/functions";
 import { useState } from "react";
 import LANGUAGE_CODES from '../../../utils/language-codes'
 
-export default function SearchPage() {
+const api_endpoints={
+    all:"/search/multi",
+    movie:"/search/movie",
+    tv:"/search/tv"
+}
+
+export default function SearchPage({data}) {
     const router=useRouter()
     const {language,query="",page=1,type="all",lang="en-US",include_adult="no"}=router.query
     const region=getCookie('region')?JSON.parse(getCookie('region')):{"name": "",
@@ -16,21 +22,19 @@ export default function SearchPage() {
 
     const [searchData, setsearchData] = useState({query,type,include_adult})
 
-    const api_endpoints={
-        all:"/search/multi",
-        movie:"/search/movie",
-        tv:"/search/tv"
-    }
-
     function handleChange(e) {
         const {name,value}=e.target
-        console.log({name,value});
         setsearchData(prev=>({...prev,[name]:value}))
+    }
+
+    function generateLink() {
+        const encodedQuery=searchData.query.replace(/\s+/g, "+")
+        const link=`/${language}/search?query=${encodedQuery}&type=${searchData.type}&include_adult=${searchData.include_adult}`
+        return link
     }
     function handleSubmit(e) {
         e.preventDefault()
-        const encodedQuery=searchData.query.replace(/\s+/g, "+")
-        router.push(`/${language}/search?query=${encodedQuery}&type=${searchData.type}&include_adult=${searchData.include_adult}`)
+        router.push(generateLink())
     }
     return (
         <>
@@ -67,12 +71,14 @@ export default function SearchPage() {
                 title={`Search results for "${query}"`}
                 media_type={["movie","tv"].includes(type)?type:undefined}
                 data_types={[{name:"Search",value:"search"}]}
-                loadData={{search:true}}
+                loadData={{search:false}}
                 show_media_type={true}
                 show_change_view={false}
                 key={query+type+language+page+include_adult}
-                pagination={true}
+                show_pagination={true}
                 current_page={page}
+                link={generateLink()}
+                all_data={{search:data}}
                 meta_data={{search:{
                     url: api_endpoints[type],
                     type: "tmdb",
@@ -96,7 +102,8 @@ export async function getServerSideProps({ query, req,res }) {
             ? forwarded.split(/, /)[0]
             : req.connection.remoteAddress;
        
-        const { language } = query;
+        const {language,page=1,type="all",include_adult="no"}=query
+        const search_query=query.query??""
         const isregion=getCookie('region',{req,res})
         var region={}
         if (isregion) {
@@ -110,14 +117,20 @@ export async function getServerSideProps({ query, req,res }) {
             "country-code": ""}
             setCookie('region',region,{req,res})
         }
-        // const movie_data_upcoming = await get({
-        //     url: `/movie/upcoming`,
-        //     type: "tmdb",
-        //     params: [{ key: "language", value: language },{key:'page',value:1},{key:"region",value:region["alpha-2"]}],
-        // });
+        const search_data = await get({
+            url: api_endpoints[type],
+            type: "tmdb",
+            params: [
+                { key: "language", value: language },
+                { key: "query", value: search_query },
+                { key: "page", value: page },
+                { key: "include_adult", value: include_adult==="Yes"?true:false },
+                {key:"region",value:region["alpha-2"]}
+            ],
+        });
         return {
             props: {
-                
+                data:search_data
             },
         };
     } catch (error) {

@@ -10,6 +10,9 @@ export const get = async ({url,type,params}) => {
         if (data.success===false) return {success:false,error:{...data,type}}
         return data
     } catch (error) {
+        console.log('====================================');
+        console.log(error.message);
+        console.log('====================================');
         throw Error(error)
         return {success:false,error:`${error.message}`}
     }

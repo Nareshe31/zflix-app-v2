@@ -322,6 +322,27 @@ $background-color_3: #222;
 	}
 }
 
+
+//pages
+
+.page-container{
+	display: flex;
+	justify-content: center;
+	.page{
+		margin: 0 6px 4px;
+		background-color: #1d1d1d;
+		width: 38px;
+		height: 38px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 14px;
+	}
+	.page.active{
+		background-color: #393939;	
+	}
+}
 @media screen and (min-width:1120px) {
 	.items {
 		.item,.item-load {
@@ -366,6 +387,17 @@ $background-color_3: #222;
 			}
 			.data h3{
 				font-size: 0.8rem;
+			}
+		}
+		.item-load{
+			.poster-load{
+				height: 150px !important;
+			}
+			h3{
+				height: 12px;
+			}
+			span{
+				height: 8px;
 			}
 		}
 	}

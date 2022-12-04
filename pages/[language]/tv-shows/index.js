@@ -68,9 +68,6 @@ export async function getServerSideProps({ query, req }) {
             : req.connection.remoteAddress;
        
         const { language } = query;
-        console.log('====================================');
-        console.log("tv show");
-        console.log('====================================');
         // const movie_data_popular = await get({
         //     url: `/movie/popular`,
         //     type: "tmdb",

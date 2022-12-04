@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { get } from "../service/api-fetch";
 import Link from "next/link";
+import Pagination from "./Pagination";
 
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
     ssr: false,
@@ -19,7 +20,8 @@ export default function PosterContainer({
     view,
     show_media_type,
     show_change_view,
-    show_pagination
+    show_pagination,
+    link
 }) {
     const datatype = loadData[data_types[0]] ? null : data_types[0].value;
     const [data, setdata] = useState({
@@ -35,7 +37,6 @@ export default function PosterContainer({
     // const data=data_type==="day"?data_day:data_week
 
     useEffect(() => {
-        console.log(data.loadData[data.data_type]);
         if (data.loadData[data.data_type]) {
             getData();
         } else {
@@ -53,9 +54,8 @@ export default function PosterContainer({
                 all_data: { ...prev.all_data, [prev.data_type]: responsedata },
             }));
         } catch (error) {
-            console.log("hello",error.message)
+            console.log("hello", error.message);
         }
-        
     };
 
     const change_data_type = (datatype) => {
@@ -68,6 +68,10 @@ export default function PosterContainer({
             view: prev.view === "vertical" ? "horizontal" : "vertical",
         }));
     };
+
+    if (!(data.loading || data.all_data[data.data_type]?.results?.length)) {
+        return null;
+    }
     return (
         <section className={`posters_section ${data.view}`}>
             <PosterHeader
@@ -80,32 +84,19 @@ export default function PosterContainer({
                 containerview={data.view}
                 show_change_view={show_change_view}
             />
-            <Pagination 
+            <Pagination
                 show={show_pagination}
                 loading={data.loading}
                 data={data.all_data[data.data_type]}
-                key={
-                    "owl " +
-                    data.view +
-                    " " +
-                    data.loading +
-                    " " +
-                    JSON.stringify(data.all_data)
-                }
+                link={link}
+                key={`owl ${data.view} ${data.loading} ${JSON.stringify(data.all_data)} ${link}`}
             />
             {data.view === "horizontal" ? (
                 <OwlCarouselSlider
                     data={data.all_data[data.data_type]}
                     loading={data.loading}
                     meta_data={meta_data}
-                    key={
-                        "owl " +
-                        data.view +
-                        " " +
-                        data.loading +
-                        " " +
-                        JSON.stringify(data.all_data)
-                    }
+                    key={`owl ${data.view} ${data.loading} ${JSON.stringify(data.all_data)} ${link}`}
                     media_type={media_type}
                     show_media_type={show_media_type}
                 />
@@ -126,21 +117,24 @@ export default function PosterContainer({
                     show_media_type={show_media_type}
                 />
             )}
+            <Pagination
+                show={show_pagination}
+                loading={data.loading}
+                data={data.all_data[data.data_type]}
+                link={link}
+                key={
+                    "owl " +
+                    data.view +
+                    " " +
+                    data.loading +
+                    " " +
+                    JSON.stringify(data.all_data)
+                }
+            />
         </section>
     );
 }
 
-function Pagination({loading,data,show}) {
-    if(!show) return null
-    return(
-        <div>
-            {loading?<h4>Loading...</h4>:
-                
-                <div>
-                </div>}
-        </div>
-    )
-}
 
 function VerticalPosterContainer({
     data,

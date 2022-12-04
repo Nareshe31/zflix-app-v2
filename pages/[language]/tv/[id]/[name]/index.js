@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Genres from "../../../../../molecules/Genres";
 import PageHead from "../../../../../molecules/PageHead";
 import PosterContainer from "../../../../../molecules/PosterContainer";
 import { get } from "../../../../../service/api-fetch";
@@ -106,7 +107,7 @@ export default function TvPage({ data }) {
                     id="watch-frame"
                     webkitallowfullscreen=""
                     mozallowfullscreen=""
-                    allowFullScreen=""
+                    allowfullscreen=""
                     key={data.id+season+episode}
                     frameBorder={0}
                     src={`https://www.2embed.to/embed/tmdb/tv?id=${data.id}&s=${season}&e=${episode}`}
@@ -131,13 +132,7 @@ export default function TvPage({ data }) {
                         <span className="dot"></span>{" "}
                         <span>{data?.episode_run_time[0]}mins</span>
                     </p>
-                    <div className="genres text-sm">
-                        {data.genres.map((item) => (
-                            <span className="genre" key={item.id}>
-                                {item.name}
-                            </span>
-                        ))}
-                    </div>
+                    <Genres data={data.genres} type="tv" />
                     <p className="text-sm">
                         TMDB Rating {Number(data.vote_average).toFixed(1)}/10
                     </p>

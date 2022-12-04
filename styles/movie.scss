@@ -73,7 +73,7 @@
     display: flex;
     gap: 3px;
     flex-wrap: wrap;
-    .genre{
+    a{
         &::after{
             content: ',';
         }

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getLink, getYear, TMDB_BASE_IMAGE_PATH } from "../utils/functions";
+import { setCookie,getCookie,hasCookie } from 'cookies-next';
 
 export default function Poster({ item, media_type,show_media_type }) {
     const router = useRouter();
@@ -15,6 +16,28 @@ export default function Poster({ item, media_type,show_media_type }) {
     const link = getLink(item, media_type, language);
     const imageURL = `${TMDB_BASE_IMAGE_PATH("w342")}${item.poster_path ? item.poster_path : "/wZwxopzmqOBmS44Y2q4LUsOiFTC.jpg"
         }`;
+
+    function getAddItem() {
+        const {name,title,release_date,first_air_date,poster_path,id,vote_average}=item
+        switch (media_type) {
+            case "movie":
+                return {id,title,release_date,poster_path,media_type,vote_average,added_at:Date.now()}
+                break;
+            case "tv":
+                return {id,name,first_air_date,poster_path,media_type,vote_average,added_at:Date.now()}
+                break;
+            default:
+                break;
+        }
+    }
+
+    function handleBookmark(event) {
+        event.preventDefault()
+        const watchlist=localStorage.getItem('watchlist')?JSON.parse(localStorage.getItem('watchlist')):[]
+        const addItem=getAddItem()
+        watchlist.push(addItem)
+        localStorage.setItem('watchlist', JSON.stringify(watchlist))
+    }
     return (
         <article key={item.id} id={`post-${item.id}`} className="item movies">
             <div className="poster">
@@ -34,7 +57,7 @@ export default function Poster({ item, media_type,show_media_type }) {
                     <i className="fa-solid fa-star"></i>
                     {Number(item.vote_average).toFixed(1)}
                 </div>
-                <div className="bookmark" onClick={(e) => e.preventDefault()}>
+                <div className="bookmark" onClick={handleBookmark}>
                     <i className="fa-regular fa-bookmark"></i>
                 </div>
                 {show_media_type?
