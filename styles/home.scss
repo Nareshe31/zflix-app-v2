@@ -343,6 +343,54 @@ $background-color_3: #222;
 		background-color: #393939;	
 	}
 }
+
+//Filter page css
+
+.filter-genres{
+	max-width: 100%;
+	flex-wrap: wrap;
+	display: flex;
+	.filter-genre{
+		margin: 4px 6px;
+		padding: 4px 8px;
+		cursor: pointer;
+		border-radius: 2px;
+		color: var(--primary-text-color);
+		font-size: 15px;
+		background-color: #1a1a1a;
+	}
+	.filter-genre.active{
+		background-color: #444;
+	}
+}
+.filter-form-container{
+	padding: 10px 30px 10px;
+	max-width: 750px;
+	margin: 0 auto;
+	& form{
+		max-height: 800px;
+		overflow: hidden;
+		transition: max-height 0.75s ease-in-out;
+		&>div{
+			margin-bottom: 8px;
+			label{
+				font-weight: 600;
+			}
+		}
+	}
+	& form.hide{
+		max-height: 0;
+		transition: max-height 0.75s ease-in-out;
+		overflow: hidden;
+	}
+	.filter-head{
+		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 10px;
+		
+	}
+}
 @media screen and (min-width:1120px) {
 	.items {
 		.item,.item-load {
@@ -406,6 +454,9 @@ $background-color_3: #222;
 	}
 	.posters_section.horizontal {
 		padding: 10px 6px 0px !important;
+	}
+	.filter-form-container{
+		padding: 10px 14px 10px !important;
 	}
 	:root {
 		--poster-section-padding: 8px;

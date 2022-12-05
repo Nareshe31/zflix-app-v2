@@ -228,3 +228,18 @@ export const TV_GENRES = [
     { id: 10768, name: "War & Politics" },
     { id: 37, name: "Western" },
 ];
+
+export const FILTER_SORT_BY_VALUES=[ { name:"Popular ascending", value: 'popularity.asc' },
+{ name:"Popular descending", value: 'popularity.desc' },
+{ name:"Release date ascending", value: 'release_date.asc' },
+{ name:"Release date descending", value: 'release_date.desc' },
+{ name:"Revenue ascending", value: 'revenue.asc' },
+{ name:"Revenue descending", value: 'revenue.desc' },
+{ name:"Primary release date ascending", value: 'primary_release_date.asc' },
+{ name:"Primary release date descending", value: 'primary_release_date.desc' },
+{ name:"Original title ascending", value: 'original_title.asc' },
+{ name:"Original title descending", value: 'original_title.desc' },
+{ name:"Vote average ascending", value: 'vote_average.asc' },
+{ name:"Vote average descending", value: 'vote_average.desc' },
+{ name:"Vote count ascending", value: 'vote_count.asc' },
+{ name:"Vote count descending", value: 'vote_count.desc' } ]

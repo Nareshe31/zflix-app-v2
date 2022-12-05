@@ -10,11 +10,11 @@ export default function Genres({ data,type}) {
                 <Link
                     key={genre.id}
                     href={{
-                        pathname: `/[language]/genre/${type}/[name]`,
+                        pathname: `/[language]/filter`,
                         query: {
                             language: language,
-                            id: genre.id,
-                            name: `${String(genre.name).toLowerCase()}`,
+                            genres: genre.id,
+                            type
                         },
                     }}
                 >
