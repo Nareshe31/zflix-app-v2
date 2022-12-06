@@ -1,13 +1,13 @@
 import PosterHeader from "./PosterHeader";
 import Poster from "./Poster";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { get } from "../service/api-fetch";
 import Link from "next/link";
 import Pagination from "./Pagination";
 
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
-    ssr: false,
+    ssr: false
 });
 
 export default function PosterContainer({

@@ -377,6 +377,19 @@ $background-color_3: #222;
 				font-weight: 600;
 			}
 		}
+		&>button{
+			background-color: #333;
+			color: #ccc;
+			padding: 4px 12px;
+			font-size: 15px;
+			margin: 16px 0 10px;
+			border: 1px solid transparent;
+		}
+		button.disabled{
+			background-color: transparent;
+			cursor: not-allowed;
+			border: 1px solid #888;
+		}
 	}
 	& form.hide{
 		max-height: 0;

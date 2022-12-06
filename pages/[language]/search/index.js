@@ -5,7 +5,7 @@ import { getCookie, setCookie } from 'cookies-next';
 import PageHead from "../../../molecules/PageHead";
 import { overview } from "../../../utils/functions";
 import { useState } from "react";
-import LANGUAGE_CODES from '../../../utils/language-codes'
+import LANGUAGE_CODES from '../../../utils/data-codes'
 
 const api_endpoints={
     all:"/search/multi",

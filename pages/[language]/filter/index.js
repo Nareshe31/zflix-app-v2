@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { getCookie, setCookie } from "cookies-next";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PageHead from "../../../molecules/PageHead";
 import PosterContainer from "../../../molecules/PosterContainer";
 import { get } from "../../../service/api-fetch";
@@ -9,40 +9,69 @@ import {
     FILTER_SORT_BY_VALUES,
     LANGUAGE_CODES,
     MOVIE_GENRES,
+    MOVIE_WATCH_PROVIDERS,
     TV_GENRES,
-} from "../../../utils/language-codes";
+    TV_WATCH_PROVIDERS,
+} from "../../../utils/data-codes";
 
-export default function MovieGenre({ data }) {
+export default function FilterPage({ data }) {
     const router = useRouter();
     const {
         language,
-        genres,
+        genres = "",
         type = "movie",
         page = 1,
         include_adult = "no",
-        with_original_language = "",
-        sort_by = "popularity.desc",
+        original_language = "",
+        watch_providers = "",
+        sort_by = "vote_count.desc",
     } = router.query;
     const [filterData, setfilterData] = useState({
         genres: genres.split(","),
         type,
         include_adult,
-        with_original_language,
+        original_language,
+        watch_providers: String(watch_providers).split(","),
+        sort_by,
     });
 
-    const formRef = useRef(null)
+    const formRef = useRef(null);
+    const filterApplyRef = useRef(null);
 
+    useEffect(() => {
+      
+        if (checkValueChanged()) {
+            // filterApplyRef.current.setAttribute('disabled',"false")
+            return
+        }
+        // filterApplyRef.current.setAttribute('disabled',"true")
+      return () => {
+      }
+    }, [filterData])
+    
     function generateLink() {
-        const link = `/${language}/filter?genres=${genres}&with_original_language=${with_original_language}&type=${type}&sort_by=${sort_by}`;
+        const link = `/${language}/filter?genres=${genres}&original_language=${original_language}&type=${type}&sort_by=${sort_by}&watch_providers=${watch_providers}`;
         return link;
     }
-    function handleGenreChange(genre) {
-        const id = String(genre.id);
+
+    function checkValueChanged() {
+        if(filterData.original_language!==original_language) return true
+        if(filterData.sort_by!==sort_by) return true
+        if(filterData.type!==type) return true
+        if(filterData.genres.length!==genres.split(',').length) return true
+        if(filterData.genres.filter(g=>!genres.split(',').includes(g)).length!==0) return true
+        if(filterData.watch_providers.length!==watch_providers.split(',').length) return true
+        if(filterData.watch_providers.filter(g=>!watch_providers.split(',').includes(g)).length!==0) return true
+        return false
+    }
+
+    function handleGenreChange(value, name) {
+        const id = String(value);
         const filterDataTemp = filterData;
-        if (filterData.genres.includes(id)) {
-            filterData.genres = filterData.genres.filter((prev) => prev !== id);
+        if (filterData[name].includes(id)) {
+            filterData[name] = filterData[name].filter((prev) => prev !== id);
         } else {
-            filterData.genres = [...filterData.genres, id];
+            filterData[name] = [...filterData[name], id];
         }
         setfilterData((prev) => ({ ...prev, filterDataTemp }));
     }
@@ -53,6 +82,7 @@ export default function MovieGenre({ data }) {
         filterData[name] = value;
         if (name === "type") {
             filterData.genres = [];
+            filterData.watch_providers = [];
         }
         setfilterData((prev) => ({ ...prev, filterDataTemp }));
     }
@@ -61,29 +91,40 @@ export default function MovieGenre({ data }) {
         event.preventDefault();
         const link = `/${language}/filter?genres=${filterData.genres.join(
             ","
-        )}&with_original_language=${filterData.with_original_language}&type=${filterData.type
-            }&sort_by=${filterData.sort_by}`;
-        router.push(link);
+        )}&original_language=${filterData.original_language}&type=${filterData.type
+            }&sort_by=${filterData.sort_by}&watch_providers=${filterData.watch_providers
+            }`;
+        router.push({
+            pathname: "/[language]/filter",
+            query: {
+                genres: filterData.genres.join(","),
+                original_language: filterData.original_language,
+                type: filterData.type,
+                sort_by: filterData.sort_by,
+                watch_providers: filterData.watch_providers.join(","),
+                language
+            },
+        });
     }
     // const genre_name = String(name)[0].toUpperCase() + String(name).slice(1);
 
-    function GenresSelect({ selected_genres, genres }) {
+    function GenresSelect({ selected_genres, genres, name, label, id, value }) {
         return (
             <div>
-                <label htmlFor="">Genres: </label>
+                <label htmlFor="">{label}: </label>
 
                 <div className="filter-genres" key={selected_genres}>
                     {/* <div>{selected_genres.map(genre=><span key={genre}>{genres.filter[genre]}</span>)}</div> */}
                     {/* <div> */}
                     {genres.map((genre) => (
                         <button
-                            className={`${selected_genres.includes(String(genre.id)) ? "active" : ""
+                            className={`${selected_genres.includes(String(genre[id])) ? "active" : ""
                                 } filter-genre`}
-                            onClick={() => handleGenreChange(genre)}
-                            key={genre.id}
-                            data-value={genre.id}
+                            onClick={() => handleGenreChange(genre[id], name)}
+                            key={genre[id]}
+                            data-value={genre[id]}
                         >
-                            {genre.name}
+                            {genre[value]}
                         </button>
                     ))}
                     {/* </div> */}
@@ -99,24 +140,30 @@ export default function MovieGenre({ data }) {
                 image_path="/icons/apple-touch-icon.png"
             />
             <section className="filter-form-container">
-                <div className="filter-head" onClick={()=>formRef.current.classList.toggle('hide')}>
+                <div
+                    className="filter-head"
+                    onClick={() => formRef.current.classList.toggle("hide")}
+                >
                     <h2>Filter</h2>
-                    <div><i class="fa-solid fa-circle-chevron-down"></i></div>
+                    <div>
+                        <i className="fa-solid fa-circle-chevron-down"></i>
+                    </div>
                 </div>
                 <form
                     onSubmit={handleSubmit}
                     action={``}
                     ref={formRef}
+                    className="hide"
                 >
                     <div>
                         <label htmlFor="">Language: </label>
                         <select
-                            name="with_original_language"
+                            name="original_language"
                             onChange={handleFilterChange}
                             id=""
-                            value={filterData.with_original_language}
+                            value={filterData.original_language}
                         >
-                            <option value="" selected>
+                            <option value="" defaultValue>
                                 All
                             </option>
                             {LANGUAGE_CODES.map((lang) => (
@@ -139,8 +186,24 @@ export default function MovieGenre({ data }) {
                         </select>
                     </div>
                     <GenresSelect
+                        name="genres"
+                        label="Genres"
                         selected_genres={filterData.genres}
+                        id={"id"}
+                        value={"name"}
                         genres={filterData.type === "movie" ? MOVIE_GENRES : TV_GENRES}
+                    />
+                    <GenresSelect
+                        name="watch_providers"
+                        label="Watch providers"
+                        id={"provider_id"}
+                        value={"provider_name"}
+                        selected_genres={filterData.watch_providers}
+                        genres={
+                            filterData.type === "movie"
+                                ? MOVIE_WATCH_PROVIDERS
+                                : TV_WATCH_PROVIDERS
+                        }
                     />
                     <div>
                         <label htmlFor="">Sort by: </label>
@@ -159,13 +222,12 @@ export default function MovieGenre({ data }) {
                     </div>
                     <button
                         style={{
-                            background: "#222",
-                            color: "#ccc",
-                            padding: "4px 10px",
-                            fontSize: "15px",
-                            margin:"10px 0"
+                            
                         }}
                         type="submit"
+                        // ref={filterApplyRef}
+                        className={`${!checkValueChanged()?'disabled':''}`}
+                        disabled={!checkValueChanged()}
                     >
                         Apply
                     </button>
@@ -183,9 +245,11 @@ export default function MovieGenre({ data }) {
                     language +
                     page +
                     include_adult +
-                    with_original_language +
+                    original_language +
                     type +
-                    sort_by
+                    sort_by +
+                    watch_providers +
+                    JSON.stringify(router.query)
                 }
                 show_pagination={true}
                 current_page={page}
@@ -206,12 +270,12 @@ export async function getServerSideProps({ query, req, res }) {
         const {
             language,
             page = 1,
-            name,
             genres,
             type = "movie",
             include_adult = "no",
-            sort_by = "popularity.desc",
-            with_original_language = "",
+            sort_by = "vote_count.desc",
+            original_language = "",
+            watch_providers = "",
         } = query;
         const isregion = getCookie("region", { req, res });
         var region = {};
@@ -227,22 +291,24 @@ export async function getServerSideProps({ query, req, res }) {
             };
             setCookie("region", region, { req, res });
         }
-        const genre_data = await get({
+        const filter_data = await get({
             url: `/discover/${type}`,
             type: "tmdb",
             params: [
                 { key: "language", value: language },
                 { key: "with_genres", value: genres },
                 { key: "page", value: page },
-                { key: "with_original_language", value: with_original_language },
+                { key: "with_original_language", value: original_language },
+                { key: "with_watch_providers", value: watch_providers },
                 { key: "sort_by", value: sort_by },
+                { key: "watch_region", value: region["alpha-2"]??"IN" },
                 { key: "include_adult", value: include_adult === "Yes" ? true : false },
                 // {key:"region",value:region["alpha-2"]}
             ],
         });
         return {
             props: {
-                data: genre_data,
+                data: filter_data,
             },
         };
     } catch (error) {
