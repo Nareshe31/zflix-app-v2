@@ -63,6 +63,7 @@ export default function MoviePage({ data }) {
                 </div>
                 <div className="info">
                     <h3 className="tex-lg">{data.title}</h3>
+                    <p className="text-sm">{data.tagline}</p>
                     <p className="text-sm year-runtime">
                         <span>{getDate(data.release_date)}</span>
                         <span className="dot"></span> <span>{data.runtime}mins</span>
@@ -89,7 +90,7 @@ export default function MoviePage({ data }) {
                 meta_data={{
                     recommendations: {
                         url: `/movie/${data.id}/recommendations`,
-                        type: "tmdb",
+                        type: "tmdb_client",
                         params: [{ key: "language", value: language }],
                     },
                 }}
@@ -105,7 +106,7 @@ export default function MoviePage({ data }) {
                 meta_data={{
                     similar: {
                         url: `/movie/${data.id}/similar`,
-                        type: "tmdb",
+                        type: "tmdb_client",
                         params: [{ key: "language", value: language }],
                     },
                 }}
@@ -118,7 +119,7 @@ export async function getServerSideProps(context) {
     const { id, language } = context.query;
     const data = await get({
         url: `/movie/${id}`,
-        type: "tmdb",
+        type: "tmdb_server",
         params: [
             { key: "language", value: language },
             {

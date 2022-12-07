@@ -293,7 +293,7 @@ export async function getServerSideProps({ query, req, res }) {
         }
         const filter_data = await get({
             url: `/discover/${type}`,
-            type: "tmdb",
+            type: "tmdb_server",
             params: [
                 { key: "language", value: language },
                 { key: "with_genres", value: genres },
@@ -301,9 +301,8 @@ export async function getServerSideProps({ query, req, res }) {
                 { key: "with_original_language", value: original_language },
                 { key: "with_watch_providers", value: watch_providers },
                 { key: "sort_by", value: sort_by },
-                { key: "watch_region", value: region["alpha-2"]??"IN" },
+                { key: "watch_region", value: region["alpha-2"] },
                 { key: "include_adult", value: include_adult === "Yes" ? true : false },
-                // {key:"region",value:region["alpha-2"]}
             ],
         });
         return {

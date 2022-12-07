@@ -37,7 +37,7 @@ export default function TvPage({ data }) {
             setseasonDetail({ loading: true, data: [] });
             const seasondata = await get({
                 url: `/tv/${id}/season/${additionalData.season}`,
-                type: "tmdb",
+                type: "tmdb_client",
                 params: [
                     { key: "language", value: language },
                     {
@@ -127,6 +127,7 @@ export default function TvPage({ data }) {
                 </div>
                 <div className="info">
                     <h3 className="tex-lg">{data.name}</h3>
+                    <p>{data.tagline}</p>
                     <p className="text-sm year-runtime">
                         <span>{getDate(data.first_air_date)}</span>
                         <span className="dot"></span>{" "}
@@ -167,12 +168,12 @@ export default function TvPage({ data }) {
                 media_type="tv"
                 data_types={[{ name: "Recommendations", value: "recommendations" }]}
                 view="horizontal"
-                key={"recommendations"+data.id}
+                key={"recommendations "+data.id}
                 show_change_view={true}
                 meta_data={{
                     recommendations: {
                         url: `/tv/${data.id}/recommendations`,
-                        type: "tmdb",
+                        type: "tmdb_client",
                         params: [{ key: "language", value: language }],
                     },
                 }}
@@ -183,12 +184,12 @@ export default function TvPage({ data }) {
                 media_type="tv"
                 data_types={[{ name: "Similar", value: "similar" }]}
                 view="horizontal"
-                key={"similar"+data.id}
+                key={"similar "+data.id}
                 show_change_view={true}
                 meta_data={{
                     similar: {
                         url: `/tv/${data.id}/similar`,
-                        type: "tmdb",
+                        type: "tmdb_client",
                         params: [{ key: "language", value: language }],
                     },
                 }}
@@ -201,7 +202,7 @@ export async function getServerSideProps(context) {
     const { id, language } = context.query;
     const data = await get({
         url: `/tv/${id}`,
-        type: "tmdb",
+        type: "tmdb_server",
         params: [
             { key: "language", value: language },
             {

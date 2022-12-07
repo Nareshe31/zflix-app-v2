@@ -89,14 +89,14 @@ export default function PosterContainer({
                 loading={data.loading}
                 data={data.all_data[data.data_type]}
                 link={link}
-                key={`owl ${data.view} ${data.loading} ${JSON.stringify(data.all_data)} ${link}`}
+                key={`pagination top ${data.view} ${data.loading} ${link}`}
             />
             {data.view === "horizontal" ? (
                 <OwlCarouselSlider
                     data={data.all_data[data.data_type]}
                     loading={data.loading}
                     meta_data={meta_data}
-                    key={`owl ${data.view} ${data.loading} ${JSON.stringify(data.all_data)} ${link}`}
+                    key={`owl ${data.view} ${data.loading} ${link}`}
                     media_type={media_type}
                     show_media_type={show_media_type}
                 />
@@ -105,14 +105,7 @@ export default function PosterContainer({
                     data={data.all_data[data.data_type]}
                     loading={data.loading}
                     media_type={media_type}
-                    key={
-                        "default " +
-                        data.view +
-                        " " +
-                        data.loading +
-                        " " +
-                        JSON.stringify(data.all_data)
-                    }
+                    key={`vertical ${data.view} ${data.loading} ${link}`}
                     posterSection={posterSection}
                     show_media_type={show_media_type}
                 />
@@ -122,14 +115,7 @@ export default function PosterContainer({
                 loading={data.loading}
                 data={data.all_data[data.data_type]}
                 link={link}
-                key={
-                    "owl " +
-                    data.view +
-                    " " +
-                    data.loading +
-                    " " +
-                    JSON.stringify(data.all_data)
-                }
+                key={`pagination down ${data.view} ${data.loading} ${link}`}
             />
         </section>
     );

@@ -81,7 +81,7 @@ export default function SearchPage({data}) {
                 all_data={{search:data}}
                 meta_data={{search:{
                     url: api_endpoints[type],
-                    type: "tmdb",
+                    type: "tmdb_client",
                     params: [
                         { key: "language", value: language },
                         { key: "query", value: query },
@@ -112,14 +112,14 @@ export async function getServerSideProps({ query, req,res }) {
         else{
             const response=await fetch(`http://ip-api.com/json/${ip}`)
             const data=await response.json()
-            region={"name": data.country,
-            "alpha-2": data.countryCode,
+            region={"name": data.country??"India",
+            "alpha-2": data.countryCode??"IN",
             "country-code": ""}
             setCookie('region',region,{req,res})
         }
         const search_data = await get({
             url: api_endpoints[type],
-            type: "tmdb",
+            type: "tmdb_server",
             params: [
                 { key: "language", value: language },
                 { key: "query", value: search_query },

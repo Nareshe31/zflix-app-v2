@@ -1,12 +1,15 @@
 import { useRouter } from "next/router";
 import PageHead from "../../../molecules/PageHead";
 import PosterContainer from "../../../molecules/PosterContainer";
-import { get } from "../../../service/api-fetch";
 import { overview } from "../../../utils/functions";
+import { getCookie, setCookie } from 'cookies-next';
 
 export default function TvPage() {
     const router=useRouter()
     const {language}=router.query
+    const region=getCookie('region')?JSON.parse(getCookie('region')):{"name": "India",
+    "alpha-2": "IN",
+    "country-code": ""}
     return (
         <div>
             <PageHead
@@ -21,10 +24,11 @@ export default function TvPage() {
                 loadData={{on_the_air:true}}
                 meta_data={{on_the_air:{
                     url: `/tv/on_the_air`,
-                    type: "tmdb",
+                    type: "tmdb_client",
                     params: [
                         { key: "language", value: language },
                         { key: "page", value: 1 },
+                        {key:"region",value:region["alpha-2"]}
                     ],
                 }}}
             />
@@ -33,10 +37,11 @@ export default function TvPage() {
                 loadData={{popular:true}}
                 meta_data={{popular:{
                     url: `/tv/popular`,
-                    type: "tmdb",
+                    type: "tmdb_client",
                     params: [
                         { key: "language", value: language },
                         { key: "page", value: 1 },
+                        {key:"region",value:region["alpha-2"]}
                     ],
                 }}}
                 media_type="tv"
@@ -47,7 +52,7 @@ export default function TvPage() {
                 loadData={{top_rated:true}}
                 meta_data={{top_rated:{
                     url: `/tv/top_rated`,
-                    type: "tmdb",
+                    type: "tmdb_client",
                     params: [
                         { key: "language", value: language },
                         { key: "page", value: 1 },
@@ -60,7 +65,7 @@ export default function TvPage() {
     );
 }
 
-export async function getServerSideProps({ query, req }) {
+export async function getServerSideProps({ query, req, res }) {
     try {
         const forwarded = req.headers["x-forwarded-for"];
         const ip = forwarded
@@ -68,29 +73,22 @@ export async function getServerSideProps({ query, req }) {
             : req.connection.remoteAddress;
        
         const { language } = query;
-        // const movie_data_popular = await get({
-        //     url: `/movie/popular`,
-        //     type: "tmdb",
-        //     params: [
-        //         { key: "language", value: language },
-        //         { key: "page", value: 1 },
-        //     ],
-        // });
-        // const movie_data_top_rated = await get({
-        //     url: `/movie/top_rated`,
-        //     type: "tmdb",
-        //     params: [{ key: "language", value: language },{key:'page',value:1}],
-        // });
-        const tv_data_on_the_air = await get({
-            url: `/tv/on_the_air`,
-            type: "tmdb",
-            params: [{ key: "language", value: language },{key:'page',value:1},{key:"region",value:"IN"}],
-        });
+        const isregion=getCookie('region',{req,res})
+        var region={}
+        if (isregion) {
+            region=JSON.parse(getCookie('region',{req,res}))
+        }
+        else{
+            const response=await fetch(`http://ip-api.com/json/${ip}`)
+            const data=await response.json()
+            region={"name": data.country??"India",
+            "alpha-2": data.countryCode??"IN",
+            "country-code": ""}
+            setCookie('region',region,{req,res})
+        }
+       
         return {
             props: {
-                // movie_data_popular,
-                // movie_data_top_rated,
-                tv_data_on_the_air:{}
             },
         };
     } catch (error) {

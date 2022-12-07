@@ -45,14 +45,14 @@ export default function Home() {
                 show_change_view={true}
                 meta_data={{week:{
                     url: `/trending/movie/week`,
-                    type: "tmdb",
+                    type: "tmdb_client",
                     params: [
                         { key: "language", value: language }
                     ],
                 },
                 day:{
                     url: `/trending/movie/day`,
-                    type: "tmdb",
+                    type: "tmdb_client",
                     params: [
                         { key: "language", value: language }
                     ],
@@ -68,14 +68,14 @@ export default function Home() {
                 meta_data={{
                     day:{
                         url: `/trending/tv/day`,
-                        type: "tmdb",
+                        type: "tmdb_client",
                         params: [
                             { key: "language", value: language }
                         ],
                     },
                     week:{
                     url: `/trending/tv/week`,
-                    type: "tmdb",
+                    type: "tmdb_client",
                     params: [
                         { key: "language", value: language }
                     ],
