@@ -25,6 +25,8 @@ export default function FilterPage({ data }) {
         original_language = "",
         watch_providers = "",
         sort_by = "vote_count.desc",
+        release_date_gte,
+        release_date_lte
     } = router.query;
     const [filterData, setfilterData] = useState({
         genres: genres.split(","),
@@ -33,24 +35,20 @@ export default function FilterPage({ data }) {
         original_language,
         watch_providers: String(watch_providers).split(","),
         sort_by,
+        release_date_gte,
+        release_date_lte
     });
 
     const formRef = useRef(null);
-    const filterApplyRef = useRef(null);
 
     useEffect(() => {
-      
-        if (checkValueChanged()) {
-            // filterApplyRef.current.setAttribute('disabled',"false")
-            return
-        }
-        // filterApplyRef.current.setAttribute('disabled',"true")
+      formRef.current.classList.add('hide') 
       return () => {
       }
-    }, [filterData])
+    }, [router.query])
     
     function generateLink() {
-        const link = `/${language}/filter?genres=${genres}&original_language=${original_language}&type=${type}&sort_by=${sort_by}&watch_providers=${watch_providers}`;
+        const link = `/${language}/filter?genres=${genres}&original_language=${original_language}&type=${type}&sort_by=${sort_by}&watch_providers=${watch_providers}&release_date_gte=${release_date_gte}&release_date_lte=${release_date_lte}`;
         return link;
     }
 
@@ -102,7 +100,9 @@ export default function FilterPage({ data }) {
                 type: filterData.type,
                 sort_by: filterData.sort_by,
                 watch_providers: filterData.watch_providers.join(","),
-                language
+                language,
+                release_date_gte:filterData.release_date_gte,
+                release_date_lte:filterData.release_date_lte
             },
         });
     }
@@ -206,6 +206,17 @@ export default function FilterPage({ data }) {
                         }
                     />
                     <div>
+                        <label htmlFor="">Release Date: </label>
+                        <div style={{"margin":"4px 0 4px 20px"}}>
+                            <label htmlFor="">From: </label>
+                            <input type="date" value={filterData.release_date_gte} name="release_date_gte" onChange={handleFilterChange} id="" />
+                        </div>
+                        <div style={{"margin":"0 0 4px 20px"}}>
+                            <label htmlFor="">To: </label>
+                            <input type="date" min={filterData.release_date_gte} value={filterData.release_date_lte} name="release_date_lte" onChange={handleFilterChange} id="" />
+                        </div>
+                    </div>
+                    <div>
                         <label htmlFor="">Sort by: </label>
                         <select
                             name="sort_by"
@@ -225,7 +236,6 @@ export default function FilterPage({ data }) {
                             
                         }}
                         type="submit"
-                        // ref={filterApplyRef}
                         className={`${!checkValueChanged()?'disabled':''}`}
                         disabled={!checkValueChanged()}
                     >
@@ -276,6 +286,8 @@ export async function getServerSideProps({ query, req, res }) {
             sort_by = "vote_count.desc",
             original_language = "",
             watch_providers = "",
+            release_date_gte,
+            release_date_lte
         } = query;
         const isregion = getCookie("region", { req, res });
         var region = {};
@@ -301,6 +313,8 @@ export async function getServerSideProps({ query, req, res }) {
                 { key: "with_original_language", value: original_language },
                 { key: "with_watch_providers", value: watch_providers },
                 { key: "sort_by", value: sort_by },
+                { key: "primary_release_date.gte", value: release_date_gte },
+                { key: "primary_release_date.lte", value: release_date_lte },
                 { key: "watch_region", value: region["alpha-2"] },
                 { key: "include_adult", value: include_adult === "Yes" ? true : false },
             ],

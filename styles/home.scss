@@ -128,7 +128,7 @@ $background-color_3: #222;
 			white-space: nowrap;
 			overflow: hidden;
 			color: $color_6;
-			line-height: 20px;
+			line-height: 14px;
 			&:hover {
 				color: $color_7;
 			}
@@ -358,9 +358,16 @@ $background-color_3: #222;
 		color: var(--primary-text-color);
 		font-size: 15px;
 		background-color: #1a1a1a;
+
+		&:hover{
+			background-color: #313131;
+		}
 	}
 	.filter-genre.active{
 		background-color: #444;
+		&:hover{
+			background-color: #444;
+		}
 	}
 }
 .filter-form-container{

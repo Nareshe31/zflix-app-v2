@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function Pagination({ loading, data, show, link }) {
-    if (!show || loading) return null;
+    if (!show || loading || data.total_pages===1) return null;
     const {page,total_results}=data
     const total_pages=data.total_pages>500?500:data.total_pages
     const GeneratePages=()=>{

@@ -11,7 +11,7 @@ export default function Home() {
 
     const [isocodes, setisocodes] = useState([])
     useEffect(() => {
-      getISOCode()
+    //   getISOCode()
       return () => {
       }
     }, [])
@@ -22,7 +22,7 @@ export default function Home() {
             const data=await response.json()
             setisocodes(data)
         } catch (error) {
-            
+            console.log("hello ",error.message);
         }
     }
 
