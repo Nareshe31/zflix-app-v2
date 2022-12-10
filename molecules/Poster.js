@@ -75,9 +75,9 @@ export default function Poster({ item, media_type,show_media_type }) {
             </div>
             <div className="data dfeatur">
                 <h3 title={title}>
-                    {/* <Link href={link} passHref={true}> */}
-                        <a href={link}>{title}</a>
-                    {/* </Link> */}
+                    <Link href={link} passHref>
+                        <a>{title}</a>
+                    </Link>
                 </h3>
                 <span>{year}</span>
             </div>

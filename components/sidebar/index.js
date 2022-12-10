@@ -7,6 +7,7 @@ export default function Sidebar({ }) {
     const language = router.query.language || 'en';
     const sidebar = useRef(null)
     const expandSidebar = () => {
+        return
         const asideRight = document.body;
         // ("#aside-right");
         if (sidebar.current.classList.contains("expand")) {
@@ -27,6 +28,24 @@ export default function Sidebar({ }) {
         closeSidebar()
         return () => { };
     }, [router.asPath]);
+
+    useEffect(() => {
+      
+        var prevScrollpos = window.pageYOffset;
+        window.addEventListener('scroll',scrollbehaviour)
+        function scrollbehaviour() {
+          var currentScrollPos = window.pageYOffset;
+          if (prevScrollpos > currentScrollPos) {
+            document.getElementById("sidebar").style.bottom = "0";
+          } else {
+            document.getElementById("sidebar").style.bottom = "-80px";
+          }
+          prevScrollpos = currentScrollPos;
+        }
+      return () => {
+        window.removeEventListener('scroll',scrollbehaviour)
+      }
+    }, [])
 
     const closeSidebar=()=>{
         sidebar.current.classList.value = "sidebar";
@@ -73,13 +92,13 @@ export default function Sidebar({ }) {
             icon: "fa-solid fa-bookmark",
             addBaseURL:false
         },
-        {
-            id: 6,
-            url: "/help",
-            name: "help",
-            icon: "fa-solid fa-question",
-            addBaseURL:false
-        },
+        // {
+        //     id: 6,
+        //     url: "/help",
+        //     name: "help",
+        //     icon: "fa-solid fa-question",
+        //     addBaseURL:false
+        // },
     ];
 
     const Menu = ({ item }) => {

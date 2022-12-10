@@ -29,9 +29,7 @@ export const get = async ({ url, type, params }) => {
             return { success: false, error: { ...data, type } };
         return data;
     } catch (error) {
-        console.log("====================================");
-        console.log(error.message);
-        console.log("====================================");
+        console.log("hello get ",error.message);
         throw Error(error);
         return { success: false, error: `${error.message}` };
     }

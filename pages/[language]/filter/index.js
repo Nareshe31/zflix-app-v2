@@ -25,8 +25,8 @@ export default function FilterPage({ data }) {
         original_language = "",
         watch_providers = "",
         sort_by = "vote_count.desc",
-        release_date_gte,
-        release_date_lte
+        release_date_gte="",
+        release_date_lte=""
     } = router.query;
     const [filterData, setfilterData] = useState({
         genres: genres.split(","),
@@ -286,8 +286,8 @@ export async function getServerSideProps({ query, req, res }) {
             sort_by = "vote_count.desc",
             original_language = "",
             watch_providers = "",
-            release_date_gte,
-            release_date_lte
+            release_date_gte="",
+            release_date_lte=""
         } = query;
         const isregion = getCookie("region", { req, res });
         var region = {};
