@@ -1,7 +1,8 @@
+$padding-value:16px;
 .watch-container{
     width: 100%;
     height: auto;
-    padding: 10px 40px 0;    
+    padding: 10px $padding-value 0;    
     position: relative;
     iframe{
         width: 100%;
@@ -11,7 +12,7 @@
     }
 }
 .bread-crumbs{
-    margin-left: 40px;
+    margin-left: $padding-value;
     padding: 0 ;
     font-size: 0.9rem;
     display: flex;
@@ -24,7 +25,7 @@
 }
 
 .movie-details{
-    margin: 0 40px;
+    margin: 0 $padding-value;
     padding: 24px 0;
     display: flex;
     // align-items: flex-end;

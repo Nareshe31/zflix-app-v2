@@ -207,7 +207,7 @@ border-radius: 4px;
 	}
 }
 .menu-wrapper {
-	margin: 0px 10px 0px;
+	margin: 0px 6px 0px;
 }
 .menu-list {    
 	list-style: none;
@@ -218,23 +218,19 @@ border-radius: 4px;
 	position: relative;
 	.menu-link {
 		width: max-content;
-        padding: 6px 0 6px;
+        // padding: 6px 0 6px;
 		margin: 0.25rem 0;
 		cursor: pointer;
-		width: 70px;
-		display: flex;
-		align-items: center;
-		// justify-content: center;
-		flex-direction: column;
+		width: 100%;
+		
 		border-radius: 10px;
 		.icon {
-			padding: 8px 12px 6px;
 			border-radius: 50%;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			font-size: 0.9rem;
+			font-size: 0.85rem;
 			// width: 30px;
 			// height: 30px;
 			color: $color_1;
@@ -276,7 +272,18 @@ border-radius: 4px;
 			font-size: 0.75rem;
 			// font-weight: 600;
 			color: $color_1;
-			margin-bottom: 4px;
+			margin-top: 6px;
+			text-align: center;
+			width: 100%;
+		}
+		a{
+			display: flex;
+			align-items: center;
+			// justify-content: center;
+			flex-direction: column;
+			width: 100%;
+			border-radius: 10px;
+			padding: 10px 0 10px;
 		}
 	}
 	.menu-link.menu-active {

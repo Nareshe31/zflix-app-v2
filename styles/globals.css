@@ -46,6 +46,9 @@ button{
   background: transparent;
   cursor: pointer;
 }
+button:active,button:focus-visible,a:active,a:focus-visible{
+  outline: 1px solid #aaa;
+}
 
 #__next{
   height: 100%;
@@ -65,7 +68,7 @@ button{
   --header-font-size:1.15rem;
   --secondary-font-size:0.8rem;
 
-  --sidebar-width:90px;
+  --sidebar-width:86px;
   --header-height:60px;
   --sidebar-expanded-width:220px;
   --menu-link-text-color:rgba(240,240,240,0.8);

@@ -18,7 +18,8 @@ export default function MoviePage({ data }) {
     const router = useRouter();
     const { language } = router.query;
     const poster_path = `${TMDB_BASE_IMAGE_PATH("w342")}${data.poster_path}`;
-
+    const showWatchContainer=(new Date()>=new Date(data?.release_date))
+    
     return (
         <>
             <PageHead
@@ -39,7 +40,7 @@ export default function MoviePage({ data }) {
                 <span className="separator">/</span>
                 <span>{data.title}</span>
             </header>
-            <section className="watch-container">
+            {showWatchContainer?<section className="watch-container">
                 <iframe
                     id="watch-frame"
                     key={data.id}
@@ -51,6 +52,7 @@ export default function MoviePage({ data }) {
                     title={data.id}
                 ></iframe>
             </section>
+            :null}
             <section className="movie-details">
                 <div className="poster-container">
                     <Image

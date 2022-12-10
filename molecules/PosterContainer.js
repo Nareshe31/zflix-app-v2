@@ -54,7 +54,7 @@ export default function PosterContainer({
                 all_data: { ...prev.all_data, [prev.data_type]: responsedata },
             }));
         } catch (error) {
-            console.log("hello", error.message);
+            console.log("hello ", error.message);
         }
     };
 

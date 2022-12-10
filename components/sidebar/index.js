@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 
 export default function Sidebar({ }) {
     const router = useRouter();
-    const language = router.query.language || 'en';
-    const sidebar = useRef(null)
+    const language = router.query.language || "en";
+    const sidebar = useRef(null);
     const expandSidebar = () => {
-        return
+        return;
         const asideRight = document.body;
         // ("#aside-right");
         if (sidebar.current.classList.contains("expand")) {
@@ -25,72 +25,71 @@ export default function Sidebar({ }) {
     };
 
     useEffect(() => {
-        closeSidebar()
+        closeSidebar();
         return () => { };
     }, [router.asPath]);
 
     useEffect(() => {
-      
         var prevScrollpos = window.pageYOffset;
-        window.addEventListener('scroll',scrollbehaviour)
+        window.addEventListener("scroll", scrollbehaviour);
         function scrollbehaviour() {
-          var currentScrollPos = window.pageYOffset;
-          if (prevScrollpos > currentScrollPos) {
-            document.getElementById("sidebar").style.bottom = "0";
-          } else {
-            document.getElementById("sidebar").style.bottom = "-80px";
-          }
-          prevScrollpos = currentScrollPos;
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("sidebar").style.bottom = "0";
+            } else {
+                document.getElementById("sidebar").style.bottom = "-80px";
+            }
+            prevScrollpos = currentScrollPos;
         }
-      return () => {
-        window.removeEventListener('scroll',scrollbehaviour)
-      }
-    }, [])
+        return () => {
+            window.removeEventListener("scroll", scrollbehaviour);
+        };
+    }, []);
 
-    const closeSidebar=()=>{
+    const closeSidebar = () => {
         sidebar.current.classList.value = "sidebar";
         const asideRight = document.body;
         asideRight.style.position = "";
         asideRight.style.top = "";
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
-    }
+    };
     const menu_links = [
         {
             id: 1,
             url: "",
             name: "Explore",
             icon: "fa-solid fa-house",
-            addBaseURL:true
+            addBaseURL: true,
         },
         {
             id: 2,
             url: "/movies",
-            alternalteurl:"/movie",
+            alternalteurl: "/movie",
             name: "Movies",
             icon: "fa-solid fa-film",
-            addBaseURL:true
+            addBaseURL: true,
         },
         {
             id: 3,
             url: "/tv-shows",
-            alternalteurl:"/tv",
+            alternalteurl: "/tv",
             name: "TV Shows",
             icon: "fa-solid fa-tv",
-            addBaseURL:true
+            addBaseURL: true,
         },
         {
             id: 4,
             url: "/search",
             name: "Search",
             icon: "fa-solid fa-search",
-            addBaseURL:true
+            addBaseURL: true,
         },
         {
             id: 5,
             url: "/u/watchlist",
             name: "Watchlist",
             icon: "fa-solid fa-bookmark",
-            addBaseURL:false
+            addBaseURL: false,
         },
         // {
         //     id: 6,
@@ -102,24 +101,30 @@ export default function Sidebar({ }) {
     ];
 
     const Menu = ({ item }) => {
-        const first_part=item.addBaseURL?`/${language}`:''
-        const link=first_part+item.url
-        const linkclass=`menu-link${router.asPath===link || (item.alternalteurl?(router.asPath.includes(first_part+item.alternalteurl)):false)?' menu-active':''}`
+        const first_part = item.addBaseURL ? `/${language}` : "";
+        const link = first_part + item.url;
+        const linkclass = `menu-link${router.asPath === link ||
+                (item.alternalteurl
+                    ? router.asPath.includes(first_part + item.alternalteurl)
+                    : false)
+                ? " menu-active"
+                : ""
+            }`;
         return (
-            <Link href={`${first_part}${item.url}`} passHref>
-                <a >
-                    <li className={linkclass}>
+            <li className={linkclass}>
+                <Link href={`${first_part}${item.url}`} passHref>
+                    <a>
                         <span className="icon" data-desc={item.name}>
                             <i className={item.icon}></i>
                         </span>
                         <span className="nav-link-text">{item.name}</span>
-                    </li>
-                </a>
-            </Link>
+                    </a>
+                </Link>
+            </li>
         );
     };
 
-    const MenuList = ({ data,header }) => {
+    const MenuList = ({ data, header }) => {
         return (
             <div className="menu-wrapper">
                 {/* <header>{header}</header> */}
@@ -148,8 +153,8 @@ export default function Sidebar({ }) {
                         <i id="sidebar-arrow" className="fa-solid fa-arrow-left"></i>
                     </button>
                 </div>
-                <MenuList header={"Menu"} data={menu_links.slice(0,3)} />
-                <MenuList header={"Misc"} data={menu_links.slice(3,6)} />
+                <MenuList header={"Menu"} data={menu_links.slice(0, 3)} />
+                <MenuList header={"Misc"} data={menu_links.slice(3, 6)} />
             </aside>
             <div className="sidebar-expanded-overlay" onClick={expandSidebar}></div>
         </>

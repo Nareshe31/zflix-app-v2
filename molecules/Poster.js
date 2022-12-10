@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getLink, getYear, TMDB_BASE_IMAGE_PATH } from "../utils/functions";
-import { setCookie,getCookie,hasCookie } from 'cookies-next';
+import { setCookie, getCookie, hasCookie } from "cookies-next";
 
-export default function Poster({ item, media_type,show_media_type }) {
+export default function Poster({ item, media_type, show_media_type }) {
     const router = useRouter();
     let { language } = router.query;
 
@@ -18,13 +18,37 @@ export default function Poster({ item, media_type,show_media_type }) {
         }`;
 
     function getAddItem() {
-        const {name,title,release_date,first_air_date,poster_path,id,vote_average}=item
+        const {
+            name,
+            title,
+            release_date,
+            first_air_date,
+            poster_path,
+            id,
+            vote_average,
+        } = item;
         switch (media_type) {
             case "movie":
-                return {id,title,release_date,poster_path,media_type,vote_average,added_at:Date.now()}
+                return {
+                    id,
+                    title,
+                    release_date,
+                    poster_path,
+                    media_type,
+                    vote_average,
+                    added_at: Date.now(),
+                };
                 break;
             case "tv":
-                return {id,name,first_air_date,poster_path,media_type,vote_average,added_at:Date.now()}
+                return {
+                    id,
+                    name,
+                    first_air_date,
+                    poster_path,
+                    media_type,
+                    vote_average,
+                    added_at: Date.now(),
+                };
                 break;
             default:
                 break;
@@ -32,11 +56,13 @@ export default function Poster({ item, media_type,show_media_type }) {
     }
 
     function handleBookmark(event) {
-        event.preventDefault()
-        const watchlist=localStorage.getItem('watchlist')?JSON.parse(localStorage.getItem('watchlist')):[]
-        const addItem=getAddItem()
-        watchlist.push(addItem)
-        localStorage.setItem('watchlist', JSON.stringify(watchlist))
+        event.preventDefault();
+        const watchlist = localStorage.getItem("watchlist")
+            ? JSON.parse(localStorage.getItem("watchlist"))
+            : [];
+        const addItem = getAddItem();
+        watchlist.push(addItem);
+        localStorage.setItem("watchlist", JSON.stringify(watchlist));
     }
     return (
         <article key={item.id} id={`post-${item.id}`} className="item movies">
@@ -60,12 +86,11 @@ export default function Poster({ item, media_type,show_media_type }) {
                 <div className="bookmark" onClick={handleBookmark}>
                     <i className="fa-regular fa-bookmark"></i>
                 </div>
-                {show_media_type?
+                {show_media_type ? (
                     <div className="media">
-                        {{movie:"Movie",tv:"TV"}[media_type]}
+                        {{ movie: "Movie", tv: "TV" }[media_type]}
                     </div>
-                :null
-                }
+                ) : null}
                 {/* <div className="featu">Featured</div> */}
                 <Link href={link} passHref>
                     <a title={title}>
@@ -74,11 +99,11 @@ export default function Poster({ item, media_type,show_media_type }) {
                 </Link>
             </div>
             <div className="data dfeatur">
-                <h3 title={title}>
-                    <Link href={link} passHref>
-                        <a>{title}</a>
-                    </Link>
-                </h3>
+                <Link href={link}>
+                    <a>
+                        <h3 title={title}>{title}</h3>
+                    </a>
+                </Link>
                 <span>{year}</span>
             </div>
         </article>

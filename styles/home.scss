@@ -93,7 +93,7 @@ $background-color_3: #222;
 	}
 }
 .posters_section.horizontal {
-	padding: 10px 30px 5px;
+	padding: 10px 10px 5px;
 }
 .items {
 	width: 100%;
@@ -117,18 +117,23 @@ $background-color_3: #222;
 	margin-bottom: 6px;
 	.data {
 		width: 100%;
-		margin-bottom: 10px;
-		margin-top: 10px;
+		margin: 8px 0;
 		position: relative;
+		a{
+			max-width: max-content;
+			height: max-content;
+		}
 		h3 {
 			font-weight: 600;
 			font-size: 0.825rem;
-			width: 100%;
+			// width: max-content;
+			max-width: 100%;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			overflow: hidden;
 			color: $color_6;
-			line-height: 14px;
+			// line-height: 10px;
+			display: inline-block;
 			&:hover {
 				color: $color_7;
 			}
@@ -140,6 +145,8 @@ $background-color_3: #222;
 			white-space: nowrap;
 			overflow: hidden;
 			color: $color_8;
+			display: block;
+			margin-top: -2px;
 		}
 	}
 }
@@ -186,6 +193,8 @@ $background-color_3: #222;
 	background-color: $background-color_3;
 	border-radius: 6px;
 	a {
+		display: block;
+		height: inherit;
 		.see {
 			background: url(//playmovies4k.com/wp-content/themes/dooplay/assets/css/img/play1.svg) 50% 50% no-repeat;
 			background-size: 40% 40%;
@@ -328,8 +337,13 @@ $background-color_3: #222;
 .page-container{
 	display: flex;
 	justify-content: center;
+	margin-bottom: 4px;
+	a{
+		margin: 0 6px 0;
+		border-radius: 50%;
+	}
 	.page{
-		margin: 0 6px 4px;
+		// margin: 0 6px 0;
 		background-color: #1d1d1d;
 		width: 38px;
 		height: 38px;
