@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 import PageHead from "../../molecules/PageHead";
 import PosterContainer from "../../molecules/PosterContainer";
 import { overview } from "../../utils/functions";
-import { setCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 
 export default function Home() {
     const router=useRouter()
     const {language}=router.query
+
+    const region=getCookie('region')?JSON.parse(getCookie('region')):{"name": "India",
+    "alpha-2": "IN",
+    "country-code": ""}
 
     const [isocodes, setisocodes] = useState([])
     useEffect(() => {
@@ -42,7 +46,8 @@ export default function Home() {
                 media_type="movie"
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:true,week:true}}
-                show_change_view={true}
+                // show_change_view={true}
+                view="horizontal"
                 meta_data={{week:{
                     url: `/trending/movie/week`,
                     type: "tmdb_client",
@@ -64,7 +69,8 @@ export default function Home() {
                 media_type="tv"
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:true,week:true}}
-                show_change_view={true}
+                // show_change_view={true}
+                view="horizontal"
                 meta_data={{
                     day:{
                         url: `/trending/tv/day`,
@@ -80,6 +86,92 @@ export default function Home() {
                         { key: "language", value: language }
                     ],
                 }}}
+            />
+            <PosterContainer
+                title={"Popular Movies in"}
+                media_type="movie"
+                data_types={[{name:"Netflix",value:"netflix"},{name:"Hotstar",value:"hotstar"},{name:"Prime",value:"prime"}]}
+                loadData={{netflix:true,hotstar:true,prime:true}}
+                // show_change_view={true}
+                view="horizontal"
+                meta_data={{
+                    netflix:{
+                        url: `/discover/movie`,
+                        type: "tmdb_client",
+                        params: [
+                            { key: "language", value: language },
+                            { key: "with_genres", value: "" },
+                            { key: "page", value: 1 },
+                            { key: "with_watch_providers", value: 8 },
+                            { key: "watch_region", value: region["alpha-2"] },
+                        ],
+                    },
+                    hotstar:{
+                        url: `/discover/movie`,
+                        type: "tmdb_client",
+                        params: [
+                            { key: "language", value: language },
+                            { key: "with_genres", value: "" },
+                            { key: "page", value: 1 },
+                            { key: "with_watch_providers", value: 122 },
+                            { key: "watch_region", value: region["alpha-2"] },
+                        ],
+                    },
+                    prime:{
+                        url: `/discover/movie`,
+                        type: "tmdb_client",
+                        params: [
+                            { key: "language", value: language },
+                            { key: "with_genres", value: "" },
+                            { key: "page", value: 1 },
+                            { key: "with_watch_providers", value: 119 },
+                            { key: "watch_region", value: region["alpha-2"] },
+                        ],
+                    }
+                }}
+            />
+             <PosterContainer
+                title={"Popular Shows in"}
+                media_type="tv"
+                data_types={[{name:"Netflix",value:"netflix"},{name:"Hotstar",value:"hotstar"},{name:"Prime",value:"prime"}]}
+                loadData={{netflix:true,hotstar:true,prime:true}}
+                // show_change_view={true}
+                view="horizontal"
+                meta_data={{
+                    netflix:{
+                        url: `/discover/tv`,
+                        type: "tmdb_client",
+                        params: [
+                            { key: "language", value: language },
+                            { key: "with_genres", value: "" },
+                            { key: "page", value: 1 },
+                            { key: "with_watch_providers", value: 8 },
+                            { key: "watch_region", value: region["alpha-2"] },
+                        ],
+                    },
+                    hotstar:{
+                        url: `/discover/tv`,
+                        type: "tmdb_client",
+                        params: [
+                            { key: "language", value: language },
+                            { key: "with_genres", value: "" },
+                            { key: "page", value: 1 },
+                            { key: "with_watch_providers", value: 122 },
+                            { key: "watch_region", value: region["alpha-2"] },
+                        ],
+                    },
+                    prime:{
+                        url: `/discover/tv`,
+                        type: "tmdb_client",
+                        params: [
+                            { key: "language", value: language },
+                            { key: "with_genres", value: "" },
+                            { key: "page", value: 1 },
+                            { key: "with_watch_providers", value: 119 },
+                            { key: "watch_region", value: region["alpha-2"] },
+                        ],
+                    }
+                }}
             />
         </>
     );
