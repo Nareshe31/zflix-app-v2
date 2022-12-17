@@ -2,7 +2,7 @@ $padding-value:16px;
 .watch-container{
     width: 100%;
     height: auto;
-    padding: 10px $padding-value 0;    
+    padding: 10px $padding-value 0;  
     position: relative;
     iframe{
         width: 100%;
@@ -23,7 +23,9 @@ $padding-value:16px;
         color: var(--secondary-text-color);
     }
 }
-
+.other-details{
+    padding: 10px $padding-value 0;  
+}
 .movie-details{
     margin: 0 $padding-value;
     padding: 24px 0;
@@ -109,6 +111,10 @@ $padding-value:16px;
                 font-size: 0.75rem;
             }
         }
+    }
+    .other-details{
+        margin: 0 10px;
+        padding: 10px 0 0;
     }
 }
 

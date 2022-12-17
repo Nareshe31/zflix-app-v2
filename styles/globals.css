@@ -18,7 +18,7 @@ a {
 }
 body{
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 body::-webkit-scrollbar {
   width: 10px;
@@ -86,11 +86,12 @@ button:active,button:focus-visible,a:active,a:focus-visible{
 }
 
 .aside-right{
-  margin-left: var(--sidebar-width);
+  margin-left: var(--sidebar-width);  
   position: relative;
   width: calc(100% - var(--sidebar-width));
   margin-top: calc(var(--header-height) + 0px);
-  height: 100%;
+  margin-bottom: 20px;
+  /* height: 100%; */
   /* transition: all 0.3s ease-in-out; */
 }
 .aside-right .header .title{

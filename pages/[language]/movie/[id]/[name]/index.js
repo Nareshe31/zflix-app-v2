@@ -1,8 +1,9 @@
 // import PageHead from "../../../../../molecules/PageHead"
+import { getCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Genres from "../../../../../molecules/Genres";
 import PageHead from "../../../../../molecules/PageHead";
 import PosterContainer from "../../../../../molecules/PosterContainer";
@@ -19,7 +20,10 @@ export default function MoviePage({ data }) {
     const { language } = router.query;
     const poster_path = `${TMDB_BASE_IMAGE_PATH("w342")}${data.poster_path}`;
     const showWatchContainer=(new Date()>=new Date(data?.release_date))
-    
+    const region = getCookie("region")
+    ? JSON.parse(getCookie("region"))
+    : { name: "India", "alpha-2": "IN", "country-code": "" };
+    const [watchRegion, setwatchRegion] = useState(region["alpha-2"])
     return (
         <>
             <PageHead
@@ -77,9 +81,20 @@ export default function MoviePage({ data }) {
                     <button>
                         <i className="fa-regular fa-bookmark"></i>Add to wishlist
                     </button>
+                    
                 </div>
             </section>
-            <section></section>
+            <section className="other-details">
+                <div>
+                    <label htmlFor="">Streaming: </label>
+                    <select value={watchRegion} onChange={(e)=>setwatchRegion(e.target.value)}>
+                        {Object.keys(data["watch/providers"]?.results).map(item=><option key={item}>{item}</option>)}
+                    </select>
+                    <div>
+                        {data["watch/providers"]?.results[watchRegion]?.flatrate?.map(item=><span style={{"margin":"4px 3px","display":"inline-block"}} key={item.provider_id}><img width={40} height={40} src={TMDB_BASE_IMAGE_PATH('w342')+item.logo_path} /></span>)}
+                    </div>
+                </div>
+            </section>
 
             <PosterContainer
                 title={"More like this"}
@@ -126,7 +141,7 @@ export async function getServerSideProps(context) {
             { key: "language", value: language },
             {
                 key: "append_to_response",
-                value: "videos,images,credits",
+                value: "videos,images,credits,watch/providers",
             },
         ],
     });

@@ -7,7 +7,7 @@ $color_6: var(--primary-text-color);
 $color_7: var(--primary-text-hover-color);
 $color_8: var(--secondary-text-color);
 $background-color_1: #1d1d1d;
-$background-color_2: #393939;
+$background-color_2: #494949;
 $background-color_3: #222;
 
 /* Poster css */
@@ -464,30 +464,47 @@ $background-color_3: #222;
 	.items {
 		.item ,.item-load{
 			width: calc(100% / 3);
-			.data{
-				// display: none;
-			}
+			
 			.data h3{
 				font-size: 0.8rem;
 			}
 		}
-		.item-load{
-			.poster-load{
-				height: 150px !important;
-			}
-			h3{
-				height: 12px;
-			}
-			span{
-				height: 8px;
-			}
+		
+	}
+	.item,.item-load{
+		.data,.data-load{
+			display: none;
+		}
+	}
+	.item-load{
+		
+		.poster-load{
+			height: 160px !important;
+		}
+		h3{
+			height: 12px;
+		}
+		span{
+			height: 8px;
 		}
 	}
 	.posters_section {
 		padding: 10px 6px 20px !important;
+		header{
+			h3{
+				font-size: 0.96rem;
+			}
+			.type {
+				gap: 6px;
+				button {
+					padding: 3px 8px;
+					font-size: 0.85rem;
+				}
+			}
+		}
 	}
 	.posters_section.horizontal {
-		padding: 10px 6px 0px !important;
+		padding: 10px 6px 10px !important;
 	}
 	.filter-form-container{
 		padding: 10px 14px 10px !important;
