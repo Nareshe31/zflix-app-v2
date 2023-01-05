@@ -22,6 +22,11 @@ $padding-value:16px;
     .separator{
         color: var(--secondary-text-color);
     }
+    .title{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 }
 .other-details{
     padding: 10px $padding-value 0;  
@@ -83,6 +88,9 @@ $padding-value:16px;
         &:last-child::after{
             content: none;
         }
+        &:hover,&:focus-visible{
+            color: #aaa;
+        }
     }
 }
 @media screen and (max-width:640px) {
@@ -95,7 +103,8 @@ $padding-value:16px;
         }
     }
     .bread-crumbs{
-        margin-left: 10px;
+        display: none;
+        margin: 0 10px;
     }
     .movie-details{
         margin: 0 10px;

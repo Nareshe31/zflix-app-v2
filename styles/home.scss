@@ -370,7 +370,7 @@ $background-color_3: #222;
 		cursor: pointer;
 		border-radius: 2px;
 		color: var(--primary-text-color);
-		font-size: 15px;
+		font-size: 0.94rem;
 		background-color: #1a1a1a;
 
 		&:hover{
@@ -390,10 +390,10 @@ $background-color_3: #222;
 	margin: 0 auto;
 	& form{
 		max-height: 1400px;
-		overflow: hidden;
+		// overflow: hidden;
 		transition: max-height 0.75s ease-in-out;
 		&>div{
-			margin-bottom: 8px;
+			margin: 8px 0 8px;
 			label{
 				font-weight: 600;
 			}
@@ -403,7 +403,7 @@ $background-color_3: #222;
 			color: #ccc;
 			padding: 4px 12px;
 			font-size: 15px;
-			margin: 16px 0 10px;
+			margin: 16px 0 10px 1px;
 			border: 1px solid transparent;
 		}
 		button.disabled{
@@ -473,7 +473,7 @@ $background-color_3: #222;
 	}
 	.item,.item-load{
 		.data,.data-load{
-			display: none;
+			// display: none;
 		}
 	}
 	.item-load{
@@ -504,10 +504,13 @@ $background-color_3: #222;
 		}
 	}
 	.posters_section.horizontal {
-		padding: 10px 6px 10px !important;
+		padding: 10px 6px 0px !important;
 	}
 	.filter-form-container{
 		padding: 10px 14px 10px !important;
+		.filter-head{
+			font-size: 0.85rem;
+		}
 	}
 	:root {
 		--poster-section-padding: 8px;

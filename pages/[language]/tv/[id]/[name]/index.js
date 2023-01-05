@@ -143,9 +143,9 @@ export default function TvPage({ data }) {
                     <p className="text-sm">
                         TMDB Rating {Number(data.vote_average).toFixed(1)}/10
                     </p>
-                    <button>
+                    {/* <button>
                         <i className="fa-regular fa-bookmark"></i>Add to wishlist
-                    </button>
+                    </button> */}
                 </div>
             </section>
             <section className="other-details">

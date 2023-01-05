@@ -1,0 +1,37 @@
+
+.search-container{
+    padding: var(--poster-section-padding);
+    form>div{
+        max-width: 350px;
+        margin: 6px 0;
+        display: flex;
+        align-items: center;
+        input{
+            padding: 4px 8px;
+            background-color: #fafafa;
+            border: 0.5px solid #444;
+            outline: none;
+            width: 250px;
+            color: #000;
+            font-size: 0.9rem;
+            display: inline-block;
+            border-radius: 4px;
+        }
+        
+        label{
+         font-size: 0.95rem;    
+         margin-right: 4px;
+         width: 100px;
+        }
+        button{
+            background:#333;
+            color:white;
+            padding:6px 16px;
+            margin-top: 6px;
+            &:focus-visible,&:hover{
+                background-color: #555;
+                color: white;
+            }
+        }
+    }
+}

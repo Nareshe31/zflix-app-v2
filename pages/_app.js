@@ -3,6 +3,7 @@ import '../styles/home.scss'
 import '../styles/movie.scss'
 import '../styles/sidebar.scss'
 import '../styles/tv.scss'
+import '../styles/search.scss'
 import Sidebar from '../components/sidebar'
 
 //import owl carousel

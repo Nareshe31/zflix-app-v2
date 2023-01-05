@@ -103,7 +103,7 @@ export default function MoviePage() {
             {showContainerIds >= 1 ? (
                 <PosterContainer
                     key={genreCodes[0].id}
-                    title={`${genreCodes[0].name} & Thriller Movies`}
+                    title={`${genreCodes[0].name} Movies`}
                     media_type="movie"
                     data_types={[{ name: genreCodes[0].name, value: genreCodes[0].value }]}
                     loadData={{ [genreCodes[0].value]: true }}
@@ -128,7 +128,7 @@ export default function MoviePage() {
 
             {showContainerIds >= 2 ? (
                 <PosterContainer
-                    title={"Mystery Movies"}
+                    title={"Horror Movies"}
                     media_type="movie"
                     data_types={[{ name: "Action", value: "action" }]}
                     loadData={{ action: true, week: true }}

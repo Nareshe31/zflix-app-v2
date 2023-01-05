@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Header({
@@ -7,7 +8,8 @@ export default function Header({
     data_types,
     change_view,
     containerview,
-    show_change_view
+    show_change_view,
+    see_all_link
 }) {
     return (
         <header>
@@ -27,23 +29,26 @@ export default function Header({
                     </div>
                 ) : null}
             </div>
-            {show_change_view?
-            <button
-                onClick={() => {
-                    // posterSectionRef.current.classList.toggle('hide');
-                    // setisHide(prev=>!prev)
-                    change_view();
-                }}
-            >
-                {containerview === "horizontal" ? (
-                    <i className="fa-solid fa-grip-vertical"></i>
-                ) : (
-                    <i className="fa-solid fa-grip"></i>
-                )}
-            </button>
-            :
-                null
-            }
+            <div className="right">
+                <span><Link href={`${see_all_link}`}>See all</Link></span>
+                {show_change_view?
+                <button
+                    onClick={() => {
+                        // posterSectionRef.current.classList.toggle('hide');
+                        // setisHide(prev=>!prev)
+                        change_view();
+                    }}
+                >
+                    {containerview === "horizontal" ? (
+                        <i className="fa-solid fa-grip-vertical"></i>
+                    ) : (
+                        <i className="fa-solid fa-grip"></i>
+                    )}
+                </button>
+                :
+                    null
+                }
+            </div>
         </header>
     );
 }

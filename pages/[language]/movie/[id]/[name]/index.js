@@ -19,11 +19,85 @@ export default function MoviePage({ data }) {
     const router = useRouter();
     const { language } = router.query;
     const poster_path = `${TMDB_BASE_IMAGE_PATH("w342")}${data.poster_path}`;
-    const showWatchContainer=(new Date()>=new Date(data?.release_date))
+    const showWatchContainer = new Date() >= new Date(data?.release_date);
     const region = getCookie("region")
-    ? JSON.parse(getCookie("region"))
-    : { name: "India", "alpha-2": "IN", "country-code": "" };
-    const [watchRegion, setwatchRegion] = useState(region["alpha-2"])
+        ? JSON.parse(getCookie("region"))
+        : { name: "India", "alpha-2": "IN", "country-code": "" };
+    const [watchRegion, setwatchRegion] = useState(region["alpha-2"]);
+    const [isAddedToWatchlist, setisAddedToWatchlist] = useState(
+        checkIfAddedInBookmark()
+    );
+
+    function getAddItem(media_type) {
+        const {
+            name,
+            title,
+            release_date,
+            first_air_date,
+            poster_path,
+            id,
+            vote_average,
+        } = data;
+        switch (media_type) {
+            case "movie":
+                return {
+                    id,
+                    title,
+                    release_date,
+                    poster_path,
+                    media_type,
+                    vote_average,
+                    added_at: Date.now(),
+                };
+                break;
+            case "tv":
+                return {
+                    id,
+                    name,
+                    first_air_date,
+                    poster_path,
+                    media_type,
+                    vote_average,
+                    added_at: Date.now(),
+                };
+                break;
+            default:
+                break;
+        }
+    }
+
+    function handleBookmark(event) {
+        event.preventDefault();
+        const watchlist = localStorage.getItem("watchlist")
+            ? JSON.parse(localStorage.getItem("watchlist"))
+            : [];
+        var newWatchlist = [];
+        if (!checkIfAddedInBookmark()) {
+            const addItem = getAddItem("movie");
+            newWatchlist = [...watchlist, addItem];
+            setisAddedToWatchlist(true);
+        } else {
+            newWatchlist = watchlist.filter((item) => item.id !== data.id);
+            setisAddedToWatchlist(false);
+        }
+
+        localStorage.setItem("watchlist", JSON.stringify(newWatchlist));
+    }
+
+    function checkIfAddedInBookmark() {
+        if (typeof window === "undefined") {
+            return false;
+        }
+        const watchlist = localStorage.getItem("watchlist")
+            ? JSON.parse(localStorage.getItem("watchlist"))
+            : [];
+        return watchlist.filter((item) => item.id === data.id).length > 0;
+    }
+
+    useEffect(() => {
+        setisAddedToWatchlist(checkIfAddedInBookmark());
+    }, [data]);
+
     return (
         <>
             <PageHead
@@ -42,21 +116,22 @@ export default function MoviePage({ data }) {
                 </span>
 
                 <span className="separator">/</span>
-                <span>{data.title}</span>
+                <span className="title">{data.title}</span>
             </header>
-            {showWatchContainer?<section className="watch-container">
-                <iframe
-                    id="watch-frame"
-                    key={data.id}
-                    webkitallowfullscreen=""
-                    mozallowfullscreen=""
-                    allowfullscreen=""
-                    frameBorder={0}
-                    src={`https://www.2embed.to/embed/tmdb/movie?id=${data.id}`}
-                    title={data.id}
-                ></iframe>
-            </section>
-            :null}
+            {showWatchContainer ? (
+                <section className="watch-container">
+                    <iframe
+                        id="watch-frame"
+                        key={data.id}
+                        webkitallowfullscreen=""
+                        mozallowfullscreen=""
+                        allowfullscreen=""
+                        frameBorder={0}
+                        src={`https://www.2embed.to/embed/tmdb/movie?id=${data.id}`}
+                        title={data.id}
+                    ></iframe>
+                </section>
+            ) : null}
             <section className="movie-details">
                 <div className="poster-container">
                     <Image
@@ -78,22 +153,72 @@ export default function MoviePage({ data }) {
                     <p className="text-sm">
                         TMDB Rating {Number(data.vote_average).toFixed(1)}/10
                     </p>
-                    <button>
-                        <i className="fa-regular fa-bookmark"></i>Add to wishlist
-                    </button>
-                    
+                    {/* <button onClick={handleBookmark}>
+                        {isAddedToWatchlist?
+                            <>
+                                <i className="fa-solid fa-bookmark"></i>
+                                Remove from wishlist
+                                </>
+                            :
+                            <>
+                                <i className="fa-regular fa-bookmark"></i>
+                                Add to wishlist
+                            </>
+                        }
+                    </button> */}
                 </div>
             </section>
             <section className="other-details">
-                <div>
-                    <label htmlFor="">Streaming: </label>
-                    <select value={watchRegion} onChange={(e)=>setwatchRegion(e.target.value)}>
-                        {Object.keys(data["watch/providers"]?.results).map(item=><option key={item}>{item}</option>)}
-                    </select>
+                {Object.keys(data["watch/providers"]?.results)?.length ? (
                     <div>
-                        {data["watch/providers"]?.results[watchRegion]?.flatrate?.map(item=><span style={{"margin":"4px 3px","display":"inline-block"}} key={item.provider_id}><img width={40} height={40} src={TMDB_BASE_IMAGE_PATH('w342')+item.logo_path} /></span>)}
+                        <label htmlFor="">Streaming: </label>
+                        <select
+                            value={watchRegion}
+                            onChange={(e) => setwatchRegion(e.target.value)}
+                        >
+                            {Object.keys(data["watch/providers"]?.results).map((item) => (
+                                <option key={item}>{item}</option>
+                            ))}
+                    </select>
+                        <div>
+                            {data["watch/providers"]?.results[watchRegion]?
+                                <>
+                                    {data["watch/providers"]?.results[watchRegion]?.flatrate?.map(
+                                        (item) => (
+                                            <span
+                                                style={{ margin: "4px 3px", display: "inline-block" }}
+                                                key={item.provider_id}
+                                            >
+                                                <img
+                                                    width={40}
+                                                    height={40}
+                                                    src={TMDB_BASE_IMAGE_PATH("w342") + item.logo_path}
+                                                />
+                                            </span>
+                                        )
+                                    )}
+                                </>
+                            :
+                            <>
+                                {data["watch/providers"]?.results[Object.keys(data["watch/providers"]?.results)[0]]?.flatrate?.map(
+                                    (item) => (
+                                        <span
+                                            style={{ margin: "4px 3px", display: "inline-block" }}
+                                            key={item.provider_id}
+                                        >
+                                            <img
+                                                width={40}
+                                                height={40}
+                                                src={TMDB_BASE_IMAGE_PATH("w342") + item.logo_path}
+                                            />
+                                        </span>
+                                    )
+                                )}
+                            </>
+                            }
+                        </div>
                     </div>
-                </div>
+                ) : null}
             </section>
 
             <PosterContainer
@@ -133,21 +258,28 @@ export default function MoviePage({ data }) {
 }
 
 export async function getServerSideProps(context) {
-    const { id, language } = context.query;
-    const data = await get({
-        url: `/movie/${id}`,
-        type: "tmdb_server",
-        params: [
-            { key: "language", value: language },
-            {
-                key: "append_to_response",
-                value: "videos,images,credits,watch/providers",
+    try {
+        const { id, language } = context.query;
+        const data = await get({
+            url: `/movie/${id}`,
+            type: "tmdb_server",
+            params: [
+                { key: "language", value: language },
+                {
+                    key: "append_to_response",
+                    value: "videos,images,credits,watch/providers",
+                },
+            ],
+        });
+        return {
+            props: {
+                data,
             },
-        ],
-    });
-    return {
-        props: {
-            data,
-        },
-    };
+        };
+    } catch (error) {
+        return {
+            notFound: true,
+        };
+    }
+   
 }

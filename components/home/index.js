@@ -46,6 +46,7 @@ export default function Home() {
                 media_type="movie"
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:true,week:true}}
+                see_all_link={`/${language}/movies/trending`}
                 // show_change_view={true}
                 view="horizontal"
                 meta_data={{week:{

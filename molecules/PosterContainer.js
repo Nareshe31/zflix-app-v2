@@ -21,7 +21,8 @@ export default function PosterContainer({
     show_media_type,
     show_change_view,
     show_pagination,
-    link
+    link,
+    see_all_link
 }) {
     const datatype = loadData[data_types[0]] ? null : data_types[0].value;
     const [data, setdata] = useState({
@@ -83,6 +84,7 @@ export default function PosterContainer({
                 data={data.data_type}
                 containerview={data.view}
                 show_change_view={show_change_view}
+                see_all_link={see_all_link}
             />
             <Pagination
                 show={show_pagination}
