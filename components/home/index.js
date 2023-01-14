@@ -71,6 +71,7 @@ export default function Home() {
                 data_types={[{name:"Day",value:"day"},{name:"Week",value:"week"}]}
                 loadData={{day:true,week:true}}
                 // show_change_view={true}
+                see_all_link={`/${language}/tv-shows/trending`}
                 view="horizontal"
                 meta_data={{
                     day:{

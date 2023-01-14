@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import DropDown from "../../../../../molecules/atoms/DropDown";
 import Genres from "../../../../../molecules/Genres";
 import PageHead from "../../../../../molecules/PageHead";
 import PosterContainer from "../../../../../molecules/PosterContainer";
@@ -161,7 +162,19 @@ export default function TvPage({ data }) {
             </section>
             <section className="season-details">
                 <header>
-                    <select
+                    <DropDown
+                            onChange={(e) =>
+                                setadditionalData({ season: e.target.value, episode: "1" })
+                            }
+                            name="season"
+                            id="season"
+                            value={additionalData.season}
+                            options={data.seasons
+                                ?.filter((season) => season.season_number !== 0)
+                                ?.map((item) => ({name:`Season ${item.season_number}`,value:String(item.season_number)}))}
+                            minWidth="100"
+                        />
+                    {/* <select
                         value={additionalData.season}
                         onChange={(e) =>
                             setadditionalData({ season: e.target.value, episode: "1" })
@@ -174,7 +187,7 @@ export default function TvPage({ data }) {
                                     Season {item.season_number}
                                 </option>
                             ))}
-                    </select>
+                    </select> */}
                 </header>
                 <EpisodesContainer key={"seasons"+data.id} seasonData={seasonDetail} />
             </section>

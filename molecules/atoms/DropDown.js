@@ -12,7 +12,7 @@ function DropDown({ options, value, onChange, name, id,minWidth,optionsPositon }
         window.removeEventListener('scroll',handleScroll)
       }
     }, [])
-    
+
     // useEffect(() => {
     //     console.log(optionsElement?.current?.classList);
     //   return () => {
@@ -69,15 +69,18 @@ function DropDown({ options, value, onChange, name, id,minWidth,optionsPositon }
                 id={`${id}-value`}
                 onClick={handleDropdownCollapse}
                 className="dropdown-value"
+                role={"menu"}
+                type="button"
                 // onBlur={handleBlur}
             >
                 {options.find((option) => option.value === value).name}{" "}
-                <i class="fa-solid fa-chevron-down"></i>
+                <i onClick={()=>console.log("icon")} class="fa-solid fa-chevron-down"></i>
             </button>
-            <div ref={optionsElement} id={`${id}-options`} className={`dropdown-options${dropdownOptions.open?' open':''} ${dropdownOptions.position}`}>
+            <div ref={optionsElement} id={`${id}-options`} role={"menubar"} className={`dropdown-options${dropdownOptions.open?' open':''} ${dropdownOptions.position}`}>
                 {options.map((option) => (
                     <span
                         className={`dropdown-option ${option.value === value?'active':''}`}
+                        role={"menuitem"}
                         onClick={(e) => {
                             // e.preventDefault();
                             handleChange(option);

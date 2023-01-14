@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import DropDown from "./atoms/DropDown";
 
 export default function Header({
     title,
@@ -11,11 +12,23 @@ export default function Header({
     show_change_view,
     see_all_link
 }) {
+
+    useEffect(() => {
+      document.body.addEventListener('resize',handleResize) 
+    
+      return () => {
+        document.body.removeEventListener('resize',handleResize)
+      }
+    }, [])
+    
+    function handleResize(e) {
+        console.log(window.innerHeight,window.innerWidth);
+    }
     return (
         <header>
             <div className="left">
                 <h3>{title}</h3>
-                {data_types.length > 1 ? (
+                {/* {data_types.length > 1 ? (
                     <div className="type">
                         {data_types.map((type, index) => (
                             <button
@@ -27,6 +40,18 @@ export default function Header({
                             </button>
                         ))}
                     </div>
+                ) : null} */}
+                 {data_types.length > 1 ? (
+                        <DropDown
+                            onChange={(e) =>
+                                e.target.value!==data?change_data_type(e.target.value):null
+                            }
+                            name={String(title).toLowerCase().split(' ').join('-')+"-type"}
+                            id={String(title).toLowerCase().split(' ').join('-')+"-type"}
+                            value={data}
+                            options={data_types.map((type, index) => ({name:type.name,value:type.value}))}
+                            minWidth="100"
+                        />
                 ) : null}
             </div>
             <div className="right">

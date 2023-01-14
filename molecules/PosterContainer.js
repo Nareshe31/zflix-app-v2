@@ -1,6 +1,6 @@
 import PosterHeader from "./PosterHeader";
 import Poster from "./Poster";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import dynamic from "next/dynamic";
 import { get } from "../service/api-fetch";
 import Link from "next/link";
@@ -10,7 +10,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
     ssr: false
 });
 
-export default function PosterContainer({
+function PosterContainer({
     title,
     all_data,
     data_types,
@@ -36,7 +36,7 @@ export default function PosterContainer({
     const posterSection = useRef(null);
     // const data=useMemo(() => , [data_type])
     // const data=data_type==="day"?data_day:data_week
-
+    console.log("rendering");
     useEffect(() => {
         if (data.loadData[data.data_type]) {
             getData();
@@ -250,3 +250,5 @@ function OwlCarouselSlider({
         </OwlCarousel>
     );
 }
+
+export default memo(PosterContainer)

@@ -198,7 +198,7 @@ button:active,button:focus-visible,a:active,a:focus-visible{
   border-radius: 4px;
   padding: 0;
   background-color: #222;
-  z-index: 1;
+  z-index: 2;
   max-height: 220px;
   overflow-y: auto;
 }
