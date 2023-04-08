@@ -5,22 +5,31 @@ export const get = async ({ url, type, params }) => {
         const query_params = params
             .map((item) => `${item.key}=${item.value}`)
             .join("&");
-        const fetch_url =
-            type === "tmdb_client"
-                ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/v2/data-fetch`
-                : type === "tmdb_server"
-                    ? `${TMDB_BASE_URL}${url}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&${query_params}`
-                    : `${url}${query_params}`;
+        let fetch_url;
+        switch (type) {
+            case "tmdb_client":
+                fetch_url=`${process.env.NEXT_PUBLIC_BASE_URL}/api/v2/data-fetch`
+                break;
+            case "tmdb_server":
+                fetch_url= `${TMDB_BASE_URL}${url}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&${query_params}`
+                break;
+            case "server":
+                fetch_url=`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}${url}`
+                break;
+            default:
+                fetch_url=url;
+                break;
+        }
         const fetch_type = (type === "tmdb_client" || type === "tmdb_server")?"tmdb":type
         var response={}
-        if (type==="tmdb_server") {
-            response = await fetch(fetch_url);
-        }
-        else{
+        if(type === "tmdb_client"){
             response = await fetch(fetch_url, {
                 method:"POST",
                 body: JSON.stringify({ url,type:fetch_type , params }),
             });
+        }
+        else {
+            response = await fetch(fetch_url);
         }
         const data = await response.json();
         if (type !== "tmdb_client" || type !== "tmdb_server") return data;

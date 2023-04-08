@@ -30,6 +30,21 @@ $padding-value:16px;
 }
 .other-details{
     padding: 10px $padding-value 0;  
+    .torrents-section{
+        .table{
+            th,td{
+                padding: 4px 8px;
+            }
+            th{
+                text-align: left;
+            }
+            tr td:last-child{
+                a{
+                    margin: 0 4px;
+                }
+            }
+        }
+    }
 }
 .movie-details{
     margin: 0 $padding-value;

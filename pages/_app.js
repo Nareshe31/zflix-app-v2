@@ -14,6 +14,9 @@ import Header from '../molecules/Header'
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import Router from 'next/router';
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const queryClient=new QueryClient;
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -42,9 +45,11 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }) {
   return( 
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </QueryClientProvider>
     )
 }
 
