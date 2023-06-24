@@ -117,7 +117,7 @@ export default function TvPage({ data }) {
                     allowfullscreen=""
                     key={data.id+season+episode}
                     frameBorder={0}
-                    src={`https://www.2embed.to/embed/tmdb/tv?id=${data.id}&s=${season}&e=${episode}`}
+                    src={`https://embed.smashystream.com/playere.php?tmdb=${data.id}&season=${season}&episode=${episode}`}
                 >
                     {" "}
                 </iframe>
