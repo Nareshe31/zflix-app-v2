@@ -14,8 +14,9 @@ export default function Poster({ item, media_type, show_media_type }) {
             ? getYear(item.release_date)
             : getYear(item.first_air_date);
     const link = getLink(item, media_type, language);
-    const imageURL = item.poster_path?`${TMDB_BASE_IMAGE_PATH("w342")}${item.poster_path}`: "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=";
-
+    const placeholderImageUrl = "https://media.istockphoto.com/id/931643150/vector/picture-icon.jpg?s=612x612&w=0&k=20&c=St-gpRn58eIa8EDAHpn_yO4CZZAnGD6wKpln9l3Z3Ok=";
+    const imageURL = item.poster_path?`${TMDB_BASE_IMAGE_PATH("w342")}${item.poster_path}`: placeholderImageUrl;
+    
     // function getAddItem() {
     //     const {
     //         name,
