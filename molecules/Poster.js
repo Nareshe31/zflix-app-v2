@@ -14,8 +14,7 @@ export default function Poster({ item, media_type, show_media_type }) {
             ? getYear(item.release_date)
             : getYear(item.first_air_date);
     const link = getLink(item, media_type, language);
-    const imageURL = `${TMDB_BASE_IMAGE_PATH("w342")}${item.poster_path ? item.poster_path : "/wZwxopzmqOBmS44Y2q4LUsOiFTC.jpg"
-        }`;
+    const imageURL = item.poster_path?`${TMDB_BASE_IMAGE_PATH("w342")}${item.poster_path}`: "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=";
 
     // function getAddItem() {
     //     const {
