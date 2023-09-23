@@ -140,7 +140,7 @@ export default function MoviePage({ data }) {
             mozallowfullscreen=""
             allowfullscreen=""
             frameBorder={0}
-            src={`https://embed.smashystream.com/playere.php?tmdb=${data.id}`}
+            src={`https://vidsrc.to/embed/movie/${data.id}`}
             title={data.id}
           ></iframe>
         </section>
