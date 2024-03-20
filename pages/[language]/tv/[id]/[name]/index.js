@@ -117,7 +117,7 @@ export default function TvPage({ data }) {
                     allowfullscreen=""
                     key={data.id+season+episode}
                     frameBorder={0}
-                    src={`https://vidsrc.to/embed/tv/${data.id}/${season}/${episode}`}
+                    src={`https://vidsrc.xyz/embed/tv?tmdb=${data.id}&season=${season}&episode=${episode}`}
                 >
                     {" "}
                 </iframe>
