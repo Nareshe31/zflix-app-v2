@@ -140,7 +140,7 @@ export default function MoviePage({ data }) {
             mozallowfullscreen=""
             allowfullscreen=""
             frameBorder={0}
-            src={`https://vidsrc.xyz/embed/movie?tmdb=${data.id}`}
+            src={`https://vidsrc.cc/v2/embed/movie/${data.id}`}
             title={data.id}
           ></iframe>
         </section>

@@ -20,13 +20,13 @@ export default function TvPage({ data }) {
     // console.log(data);
     const router = useRouter();
     const { language, season, episode, id, name } = router.query;
-    const [additionalData, setadditionalData] = useState({ season:season?season:"1", episode:episode?episode:"1" });
+    const [additionalData, setadditionalData] = useState({ season: season ? season : "1", episode: episode ? episode : "1" });
     const [seasonDetail, setseasonDetail] = useState({ loading: true, data: [] });
     const poster_path = `${TMDB_BASE_IMAGE_PATH("w342")}${data.poster_path}`;
-    const showWatchContainer=season!==undefined &&season!=="" && episode!==undefined &&episode!==""
+    const showWatchContainer = season !== undefined && season !== "" && episode !== undefined && episode !== ""
     const region = getCookie("region")
-    ? JSON.parse(getCookie("region"))
-    : { name: "India", "alpha-2": "IN", "country-code": "" };
+        ? JSON.parse(getCookie("region"))
+        : { name: "India", "alpha-2": "IN", "country-code": "" };
 
     const [watchRegion, setwatchRegion] = useState(region["alpha-2"])
 
@@ -36,9 +36,9 @@ export default function TvPage({ data }) {
     }, [additionalData]);
 
     useEffect(() => {
-        setadditionalData({ season:season?season:"1", episode:episode?episode:"1" })
+        setadditionalData({ season: season ? season : "1", episode: episode ? episode : "1" })
     }, [data.id])
-    
+
     async function getSeasonDetails() {
         try {
             setseasonDetail({ loading: true, data: [] });
@@ -60,33 +60,33 @@ export default function TvPage({ data }) {
     }
 
     function EpisodesContainer({ seasonData }) {
-        const link=(episode)=>`${getLink(data, "tv", language)}?season=${episode.season_number}&episode=${episode.episode_number}`
+        const link = (episode) => `${getLink(data, "tv", language)}?season=${episode.season_number}&episode=${episode.episode_number}`
         return (
             <>
-            {
-                seasonData.loading?
-                <h2>Loading...</h2>
-                :
-                <div className="episodes-container">
-                    {seasonData.data.episodes?.map((episode) => (
-                        <div className="episode-container" key={episode.id}>
-                            <Link
-                                href={link(episode)}
-                                passHref
-                            >
-                                <a >
-                                    <img className="episode-poster" style={{"objectFit":"cover"}} src={TMDB_BASE_IMAGE_PATH("w342")+episode.still_path} alt={`${data.name} Season ${episode.season_number} Episode ${episode.episode_number} poster`} srcSet="" />
-                                    <span className="episode-number text-lg">Episode {episode.episode_number}</span>
-                                    <span className="episode-title text-lg">{episode.name}</span>
-                                </a>
-                            </Link>
+                {
+                    seasonData.loading ?
+                        <h2>Loading...</h2>
+                        :
+                        <div className="episodes-container">
+                            {seasonData.data.episodes?.map((episode) => (
+                                <div className="episode-container" key={episode.id}>
+                                    <Link
+                                        href={link(episode)}
+                                        passHref
+                                    >
+                                        <a >
+                                            <img className="episode-poster" style={{ "objectFit": "cover" }} src={TMDB_BASE_IMAGE_PATH("w342") + episode.still_path} alt={`${data.name} Season ${episode.season_number} Episode ${episode.episode_number} poster`} srcSet="" />
+                                            <span className="episode-number text-lg">Episode {episode.episode_number}</span>
+                                            <span className="episode-title text-lg">{episode.name}</span>
+                                        </a>
+                                    </Link>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-                
-            }
+
+                }
             </>
-            
+
         );
     }
     return (
@@ -109,15 +109,15 @@ export default function TvPage({ data }) {
                 <span className="separator">/</span>
                 <span>{data.name}</span>
             </header>
-            <section style={{"display":showWatchContainer?"block":"none"}} className="watch-container">
+            <section style={{ "display": showWatchContainer ? "block" : "none" }} className="watch-container">
                 <iframe
                     id="watch-frame"
                     webkitallowfullscreen=""
                     mozallowfullscreen=""
                     allowfullscreen=""
-                    key={data.id+season+episode}
+                    key={data.id + season + episode}
                     frameBorder={0}
-                    src={`https://vidsrc.xyz/embed/tv?tmdb=${data.id}&season=${season}&episode=${episode}`}
+                    src={`https://vidsrc.cc/v2/embed/tv/${data.id}/${season}/${episode}`}
                 >
                     {" "}
                 </iframe>
@@ -152,28 +152,28 @@ export default function TvPage({ data }) {
             <section className="other-details">
                 <div>
                     <label htmlFor="">Streaming: </label>
-                    <select value={watchRegion} onChange={(e)=>setwatchRegion(e.target.value)}>
-                        {Object.keys(data["watch/providers"]?.results).map(item=><option key={item}>{item}</option>)}
+                    <select value={watchRegion} onChange={(e) => setwatchRegion(e.target.value)}>
+                        {Object.keys(data["watch/providers"]?.results).map(item => <option key={item}>{item}</option>)}
                     </select>
                     <div>
-                        {data["watch/providers"]?.results[watchRegion]?.flatrate?.map(item=><span style={{"margin":"4px 3px","display":"inline-block"}} key={item.provider_id}><img width={40} height={40} src={TMDB_BASE_IMAGE_PATH('w342')+item.logo_path} /></span>)}
+                        {data["watch/providers"]?.results[watchRegion]?.flatrate?.map(item => <span style={{ "margin": "4px 3px", "display": "inline-block" }} key={item.provider_id}><img width={40} height={40} src={TMDB_BASE_IMAGE_PATH('w342') + item.logo_path} /></span>)}
                     </div>
                 </div>
             </section>
             <section className="season-details">
                 <header>
                     <DropDown
-                            onChange={(e) =>
-                                setadditionalData({ season: e.target.value, episode: "1" })
-                            }
-                            name="season"
-                            id="season"
-                            value={additionalData.season}
-                            options={data.seasons
-                                ?.filter((season) => season.season_number !== 0)
-                                ?.map((item) => ({name:`Season ${item.season_number}`,value:String(item.season_number)}))}
-                            minWidth="100"
-                        />
+                        onChange={(e) =>
+                            setadditionalData({ season: e.target.value, episode: "1" })
+                        }
+                        name="season"
+                        id="season"
+                        value={additionalData.season}
+                        options={data.seasons
+                            ?.filter((season) => season.season_number !== 0)
+                            ?.map((item) => ({ name: `Season ${item.season_number}`, value: String(item.season_number) }))}
+                        minWidth="100"
+                    />
                     {/* <select
                         value={additionalData.season}
                         onChange={(e) =>
@@ -189,7 +189,7 @@ export default function TvPage({ data }) {
                             ))}
                     </select> */}
                 </header>
-                <EpisodesContainer key={"seasons"+data.id} seasonData={seasonDetail} />
+                <EpisodesContainer key={"seasons" + data.id} seasonData={seasonDetail} />
             </section>
 
             <PosterContainer
@@ -198,7 +198,7 @@ export default function TvPage({ data }) {
                 media_type="tv"
                 data_types={[{ name: "Recommendations", value: "recommendations" }]}
                 view="horizontal"
-                key={"recommendations "+data.id}
+                key={"recommendations " + data.id}
                 show_change_view={true}
                 meta_data={{
                     recommendations: {
@@ -214,7 +214,7 @@ export default function TvPage({ data }) {
                 media_type="tv"
                 data_types={[{ name: "Similar", value: "similar" }]}
                 view="horizontal"
-                key={"similar "+data.id}
+                key={"similar " + data.id}
                 show_change_view={true}
                 meta_data={{
                     similar: {
